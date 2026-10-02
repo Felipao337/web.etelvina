@@ -17,7 +17,8 @@
 
   const track = $('.viaje__track');
   const steps = $$('.viaje__steps li');
-  const bar = $('[data-viaje-bar]');
+  const segs = $$('[data-viaje-seg]');
+  const BOUNDS = [0, 0.3, 0.42, 0.74, 1];
   const chipas = $$('.vj-chipa').map((el, i) => ({
     el, i, x: +el.dataset.x, y: +el.dataset.y, r: +el.dataset.r,
     x0: +el.dataset.x + ((i % 3) - 1) * 40, y0: -90 - (i % 4) * 30,
@@ -54,7 +55,7 @@
 
   const TRUCK_OFF = 760; // desde la derecha
   const svg = root.querySelector('.viaje__svg');
-  const VB0 = [205, 170, 615, 430], VB1 = [262, 8, 400, 620], VB2 = [420, 96, 150, 176]; // escena → mapa → zoom al recorrido
+  const VB0 = [205, 170, 615, 430], VBM = [150, 150, 380, 460], VB1 = [262, 8, 400, 620], VB2 = [420, 96, 150, 176]; // escena → mapa → zoom al recorrido
   let lastStep = -1;
 
   const render = (p) => {
@@ -96,7 +97,9 @@
     s2.setAttribute('opacity', seg(p, 0.73, 0.79).toFixed(3));
     const z1 = easeInOut(seg(p, 0.72, 0.79));   // de la escena al país entero
     const z2 = easeInOut(seg(p, 0.79, 0.84)) - easeInOut(seg(p, 0.955, 1)); // acercar al recorrido y volver a abrir
-    const vb = VB0.map((v, i) => lerp(lerp(v, VB1[i], z1), VB2[i], clamp(z2)));
+    const narrow = window.innerWidth < 960;
+    const zs = narrow ? 1 - easeInOut(seg(p, 0.4, 0.5)) : 0; // en mobile arranca con la bolsa en primer plano
+    const vb = VB0.map((v, i) => lerp(lerp(lerp(v, VBM[i], zs), VB1[i], z1), VB2[i], clamp(z2)));
     svg.setAttribute('viewBox', vb.map((v) => v.toFixed(1)).join(' '));
     // los textos y el camioncito mantienen su tamaño en pantalla aunque haya zoom
     const zoomK = vb[2] / VB1[2];
@@ -119,7 +122,7 @@
     // textos y barra
     const step = p < 0.3 ? 0 : p < 0.42 ? 1 : p < 0.74 ? 2 : 3;
     if (step !== lastStep) { steps.forEach((li, i) => li.classList.toggle('is-on', i === step)); lastStep = step; }
-    bar.style.transform = `scaleX(${p.toFixed(4)})`;
+    segs.forEach((el, i) => el.style.setProperty('--f', seg(p, BOUNDS[i], BOUNDS[i + 1]).toFixed(3)));
   };
 
   if (reduce) { render(1); steps.forEach((li) => li.classList.add('is-on')); return; }
