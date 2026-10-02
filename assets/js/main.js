@@ -110,7 +110,6 @@
     const kg = Number(card.dataset.kg);
     const yieldEl = $('[data-yield]', card);
     const val = $('[data-qty-val]', card);
-    const label = $('[data-qty-label]', card);
     const dec = $('[data-dec]', card);
     const inc = $('[data-inc]', card);
     const addBtn = $('[data-add]', card);
@@ -129,7 +128,6 @@
       }
       val.textContent = q;
       dec.disabled = q <= 0; inc.disabled = q >= MAX_QTY;
-      label.textContent = `Bolsas ${s === 'pequeño' ? 'pequeñas' : s === 'mediano' ? 'medianas' : 'grandes'}`;
       yieldEl.textContent = q > 1 ? `≈ ${n * q} chipás en total` : `≈ ${n} chipás por bolsa`;
       addBtn.textContent = q > 0 ? 'Ver pedido' : 'Agregar al pedido';
       addBtn.classList.toggle('btn--ghost', q > 0);

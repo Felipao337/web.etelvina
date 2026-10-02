@@ -806,3 +806,41 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .order-bar__count { width: 32px; height: 32px; font-size: 13px; }
   .order-bar__cta { height: 32px; font-size: 13px; }
 }
+
+/* Controles de la bolsa: tamaño + cantidad en una sola línea, más livianos */
+.prod__opts { display: flex; align-items: flex-end; gap: 12px; margin-top: auto; }
+.prod__opts .sizes { flex: 1; min-width: 0; margin: 0; display: block; }
+.sizes legend { font-size: 11px; letter-spacing: .1em; margin-bottom: 8px; color: var(--azul-80); }
+.sizes__track {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; padding: 3px;
+  background: rgba(22, 51, 85, .07); border-radius: var(--pill);
+}
+.sizes__track label { position: relative; }
+.sizes__track span,
+.sizes__track label + label span,
+.sizes__track label:first-of-type span,
+.sizes__track label:last-of-type span {
+  min-height: 32px; padding: 0 6px; border: 0; border-radius: var(--pill);
+  font-size: 13px; font-weight: 700; color: var(--azul-60); background: transparent;
+  transition: background-color .25s var(--ease), color .25s var(--ease);
+}
+.sizes__track input:checked + span { background: var(--azul); color: var(--crudo); }
+@media (hover: hover) { .sizes__track label:hover input:not(:checked) + span { color: var(--azul); background: transparent; } }
+
+.prod__opts .qty { gap: 0; padding: 3px; border-radius: var(--pill); background: rgba(22, 51, 85, .07); }
+.prod__opts .qty button { width: 32px; height: 32px; font-size: 16px; box-shadow: none; }
+.prod__opts .qty button:disabled { opacity: .3; box-shadow: none; }
+@media (hover: hover) { .prod__opts .qty button:not(:disabled):hover { background: var(--azul); color: var(--crudo); box-shadow: none; } }
+.prod__opts .qty output { min-width: 24px; font-size: 19px; }
+.prod__yield { text-align: left; font-size: 13px; margin: 10px 0 16px; }
+
+@media (max-width: 767px) {
+  .prod__opts { gap: 8px; }
+  .sizes__track span, .sizes__track label + label span,
+  .sizes__track label:first-of-type span, .sizes__track label:last-of-type span { font-size: 12px; min-height: 30px; padding: 0 4px; }
+  .prod__opts .qty button { width: 30px; height: 30px; }
+  .prod__opts .qty output { min-width: 22px; font-size: 18px; }
+  .prod__yield { font-size: 12px; margin: 8px 0 14px; }
+}
+.prod__qty { flex: none; }
+.prod__qtyname { display: block; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--azul-80); margin-bottom: 8px; }
