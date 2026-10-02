@@ -929,7 +929,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .viaje__scene { height: 60vh; }
   .viaje__svg { position: static; }
 }
-.viaje__svg {
+.viaje.is-map .viaje__svg {
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%), linear-gradient(180deg, transparent 0, #000 6%, #000 94%, transparent 100%);
   -webkit-mask-composite: source-in; mask-composite: intersect;
   mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%), linear-gradient(180deg, transparent 0, #000 6%, #000 94%, transparent 100%);

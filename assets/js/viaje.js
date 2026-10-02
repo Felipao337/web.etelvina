@@ -92,6 +92,7 @@
 
     // 4 · mapa: de Corrientes a tu comercio
     s1.setAttribute('opacity', (1 - seg(p, 0.71, 0.76)).toFixed(3));
+    root.classList.toggle('is-map', p > 0.74);
     s2.setAttribute('opacity', seg(p, 0.73, 0.79).toFixed(3));
     const z1 = easeInOut(seg(p, 0.72, 0.79));   // de la escena al país entero
     const z2 = easeInOut(seg(p, 0.79, 0.84)) - easeInOut(seg(p, 0.955, 1)); // acercar al recorrido y volver a abrir
