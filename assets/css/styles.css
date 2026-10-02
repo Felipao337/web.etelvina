@@ -947,7 +947,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .viaje__steps li:not(.is-on) { transition-duration: .12s; visibility: hidden; transition-property: opacity, transform, visibility; }
   .viaje__n { font-family: var(--f-text); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--azul-60); }
   .viaje__n::before { content: "Paso "; }
-  .viaje__n::after { content: " de 04"; }
   .viaje__steps h3 { font-size: 18px; line-height: 1.15; margin-bottom: 4px; }
   .viaje__steps p { font-size: 13.5px; line-height: 1.45; color: var(--azul-60); }
   .viaje__bar { margin-top: 14px; gap: 4px; }
