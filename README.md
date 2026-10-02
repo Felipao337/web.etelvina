@@ -34,7 +34,7 @@ Argent CF y Arial Nova se cargan desde el kit de Adobe Fonts `tqk6yym` (`https:/
 
 - WhatsApp: `+54 9 11 5825-5145` (constante `WA_NUMBER` en `assets/js/main.js`; los links del HTML también lo tienen como fallback).
 - Cada bolsa arma su mensaje de WhatsApp con el peso y el tamaño de chipá elegido.
-- Rinde aprox. por kg: pequeño 25 · mediano 16 · grande 12 (`PER_KG` en `main.js`, datos de la presentación B2B).
+- Rinde aprox. por kg: pequeño 40 · mediano 16 · grande 12 (`PER_KG` en `main.js`, datos de la presentación B2B).
 
 ## Formulario mayorista (Resend)
 

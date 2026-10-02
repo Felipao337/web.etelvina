@@ -29,8 +29,11 @@
   $$('[data-wa]').forEach((a) => { a.href = waURL(a.dataset.wa); });
 
   /* ---------- Pedido: bolsas + tamaño + cantidad → un solo WhatsApp ---------- */
-  const PER_KG = { 'pequeño': 25, mediano: 16, grande: 12 }; // aprox. unidades por kilo
-  const IMG = { 1: '/assets/img/bolsa-1kg-640.webp', 2: '/assets/img/bolsa-2kg-640.webp', 5: '/assets/img/bolsa-5kg-640.webp' };
+  const PER_KG = { 'pequeño': 40, mediano: 16, grande: 12 }; // aprox. unidades por kilo
+  const IMG = { 1: '/assets/img/bolsa-1kg-mediano-640.webp', 2: '/assets/img/bolsa-2kg-640.webp', 5: '/assets/img/bolsa-5kg-640.webp' };
+  const SLUG = { 'pequeño': 'pequeno', mediano: 'mediano', grande: 'grande' };
+  // la bolsa de 1 kg tiene foto propia para cada tamaño de chipá
+  const imgFor = (kg, size) => (kg === 1 ? `/assets/img/bolsa-1kg-${SLUG[size]}-640.webp` : IMG[kg]);
   const MAX_QTY = 50;
   const cardSyncs = [];
   const store = {
@@ -79,7 +82,7 @@
     sendBtn.href = has ? waURL(orderText()) : '#';
     list.innerHTML = order.map((l, i) => {
       const label = `una bolsa de ${l.kg} kg ${l.size}`;
-      return `<li class="line" data-i="${i}"><img src="${IMG[l.kg]}" alt="" width="56" height="56"><div><div class="line__t">Bolsa ${l.kg} kg</div><div class="line__s">${cap(l.size)} · ≈ ${PER_KG[l.size] * l.kg * l.qty} chipás</div></div>${qtyControl(l.qty, label)}</li>`;
+      return `<li class="line" data-i="${i}"><img src="${imgFor(l.kg, l.size)}" alt="" width="56" height="56"><div><div class="line__t">Bolsa ${l.kg} kg</div><div class="line__s">${cap(l.size)} · ≈ ${PER_KG[l.size] * l.kg * l.qty} chipás</div></div>${qtyControl(l.qty, label)}</li>`;
     }).join('');
     cardSyncs.forEach((f) => f());
   };
@@ -112,8 +115,18 @@
     const inc = $('[data-inc]', card);
     const addBtn = $('[data-add]', card);
     const size = () => ($('input[type=radio]:checked', card) || {}).value || 'mediano';
+    const photo = $('[data-prod-img]', card);
+    if (photo) Object.values(SLUG).forEach((sl) => { const im = new Image(); im.src = `/assets/img/bolsa-1kg-${sl}-640.webp`; });
     const sync = () => {
       const s = size(); const q = qtyOf(kg, s); const n = PER_KG[s] * kg;
+      if (photo) {
+        const base = `/assets/img/bolsa-1kg-${SLUG[s]}`;
+        if (!photo.src.includes(base)) {
+          photo.srcset = `${base}-640.webp 640w, ${base}-1200.webp 1200w`;
+          photo.src = `${base}-640.webp`;
+          photo.alt = `Bolsa de 1 kg de chipá Etelvina, tamaño ${s}`;
+        }
+      }
       val.textContent = q;
       dec.disabled = q <= 0; inc.disabled = q >= MAX_QTY;
       label.textContent = `Bolsas ${s === 'pequeño' ? 'pequeñas' : s === 'mediano' ? 'medianas' : 'grandes'}`;
