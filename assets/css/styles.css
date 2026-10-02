@@ -518,9 +518,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @media (min-width: 1024px) { .wa-float { right: 28px; bottom: 28px; } }
 
 /* ---------- Reveal on scroll ---------- */
-.js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
-.js .reveal.is-in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1; transform: none; transition: none; } }
+.reveal-on .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.reveal-on .reveal.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal-on .reveal { opacity: 1; transform: none; transition: none; } }
 
 /* ---------- Chipás que caen ---------- */
 .productos, .prep { position: relative; overflow: hidden; }

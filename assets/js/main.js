@@ -4,6 +4,27 @@
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 
+  /* ---------- Reveal on scroll ---------- */
+  if ('IntersectionObserver' in window) {
+    document.documentElement.classList.add('reveal-on');
+    window.__etelvinaOK = true;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    $$('.reveal').forEach((el, i) => {
+      // pequeño escalonado entre hermanos
+      const sib = [...el.parentElement.children].filter((c) => c.classList.contains('reveal'));
+      el.style.transitionDelay = `${Math.min(sib.indexOf(el), 4) * 70}ms`;
+      io.observe(el);
+    });
+  } else {
+    document.documentElement.classList.remove('reveal-on');
+  }
+
+  window.addEventListener('error', () => { $$('.reveal').forEach((el) => el.classList.add('is-in')); });
+
   /* ---------- Links de WhatsApp con mensaje precargado ---------- */
   $$('[data-wa]').forEach((a) => { a.href = waURL(a.dataset.wa); });
 
@@ -151,23 +172,6 @@
   $$('a', menu).forEach((a) => a.addEventListener('click', () => setMenu(false)));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) setMenu(false); });
   window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
-
-  /* ---------- Reveal on scroll ---------- */
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((en) => {
-        if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-    $$('.reveal').forEach((el, i) => {
-      // pequeño escalonado entre hermanos
-      const sib = [...el.parentElement.children].filter((c) => c.classList.contains('reveal'));
-      el.style.transitionDelay = `${Math.min(sib.indexOf(el), 4) * 70}ms`;
-      io.observe(el);
-    });
-  } else {
-    $$('.reveal').forEach((el) => el.classList.add('is-in'));
-  }
 
   /* ---------- Nav activa ---------- */
   const links = $$('.nav__list a');
