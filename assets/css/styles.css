@@ -952,3 +952,22 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .viaje__bar { margin-top: 14px; gap: 4px; }
   .viaje__bar span { height: 2px; }
 }
+
+/* Mobile: tarjetas de producto más compactas */
+@media (max-width: 767px) {
+  .productos__list { grid-auto-columns: min(72vw, 300px); gap: 12px; }
+  .prod__media { aspect-ratio: 5 / 4; }
+  .prod__body { padding: 14px 14px 16px; }
+  .prod__title { font-size: 18px; margin-bottom: 4px; }
+  .prod__kg { font-size: 38px; }
+  .prod__desc { font-size: 13px; margin-bottom: 12px; }
+  .prod__tag { font-size: 9px; padding: 5px 9px; left: 10px; top: 10px; }
+  .sizes legend, .prod__qtyname { font-size: 10px; margin-bottom: 6px; }
+  .prod__opts { gap: 6px; }
+  .sizes__track span, .sizes__track label + label span,
+  .sizes__track label:first-of-type span, .sizes__track label:last-of-type span { font-size: 11px; min-height: 28px; padding: 0 2px; }
+  .prod__opts .qty button { width: 28px; height: 28px; font-size: 15px; }
+  .prod__opts .qty output { min-width: 18px; font-size: 16px; }
+  .prod__yield { font-size: 11px; margin: 6px 0 12px; }
+  .prod .btn--block { --h: 42px; font-size: 14px; }
+}
