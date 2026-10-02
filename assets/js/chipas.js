@@ -1,10 +1,13 @@
 /* Chipás que caen: lluvia ligada al scroll + pila con física en el cierre */
 (() => {
   const SPRITES = [
-    { src: '/assets/img/chipa/chipa-1.webp', w: 358, h: 173 },
-    { src: '/assets/img/chipa/chipa-2.webp', w: 236, h: 158 },
-    { src: '/assets/img/chipa/chipa-3.webp', w: 156, h: 130 },
-    { src: '/assets/img/chipa/chipa-5.webp', w: 360, h: 305 },
+    { src: '/assets/img/chipa/chipa-1.webp', w: 402, h: 420 },
+    { src: '/assets/img/chipa/chipa-2.webp', w: 411, h: 420 },
+    { src: '/assets/img/chipa/chipa-3.webp', w: 386, h: 420 },
+    { src: '/assets/img/chipa/chipa-4.webp', w: 420, h: 328 },
+    { src: '/assets/img/chipa/chipa-5.webp', w: 395, h: 420 },
+    { src: '/assets/img/chipa/chipa-6.webp', w: 420, h: 398 },
+    { src: '/assets/img/chipa/chipa-7.webp', w: 420, h: 372 },
   ];
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = () => window.innerWidth < 768;
@@ -24,9 +27,9 @@
       img.src = sp.src; img.alt = ''; img.decoding = 'async'; img.loading = 'lazy';
       // en mobile, sólo por los costados para no tapar textos
       // sólo por los costados, para no tapar títulos ni textos
-      const x = isMobile() ? (i % 2 ? 78 + rand() * 18 : -6 + rand() * 18)
+      const x = isMobile() ? (i % 2 ? 80 + rand() * 6 : 2 + rand() * 6)
                            : (i % 2 ? 80 + rand() * 16 : -2 + rand() * 18);
-      const size = (isMobile() ? 46 : 64) + rand() * (isMobile() ? 34 : 70);
+      const size = isMobile() ? 34 + rand() * 18 : 56 + rand() * 46;
       const d = {
         img, x, size,
         speed: 0.75 + rand() * 0.9,            // vueltas por recorrido del scroll
@@ -83,8 +86,8 @@
   if (reduce) {
     // sin animación: una pila quieta
     const img = document.createElement('img');
-    img.src = '/assets/img/chipa/chipa-pila.webp'; img.alt = ''; img.className = 'pile-static';
-    img.style.cssText = 'position:absolute;left:var(--gutter);bottom:0;width:180px;z-index:2;pointer-events:none';
+    img.src = '/assets/img/chipa/chipa-1.webp'; img.alt = ''; img.className = 'pile-static';
+    img.style.cssText = 'position:absolute;left:var(--gutter);bottom:8px;width:72px;z-index:0;pointer-events:none';
     zone.appendChild(img);
     return;
   }
@@ -104,14 +107,15 @@
     if (started) return; started = true;
     const M = await loadMatter();
     const { Engine, Bodies, Body, Composite, Query, Events } = M;
-    const engine = Engine.create({ gravity: { y: 1.1 } });
+    const engine = Engine.create({ gravity: { y: 1.7 } });
     const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
     let W = 0, H = 0, dpr = 1;
     let walls = [];
 
     const size = () => {
       const r = zone.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 3);
       W = r.width; H = r.height;
       canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
       Composite.remove(engine.world, walls);
@@ -126,26 +130,31 @@
     size();
 
     const rand = rng(7);
-    const N = isMobile() ? 16 : 22;
+    const N = isMobile() ? 18 : 24;
     const chipas = [];
+    // caen desde el borde superior de lo que se ve en pantalla, en una tanda corta
+    const visTop = Math.max(0, -zone.getBoundingClientRect().top);
     for (let i = 0; i < N; i++) {
       const sp = SPRITES[i % SPRITES.length];
-      const w = (isMobile() ? 44 : 58) + rand() * (isMobile() ? 30 : 40);
+      const w = isMobile() ? 40 + rand() * 18 : 58 + rand() * 30;
       const h = w * (sp.h / sp.w);
-      const x = W * 0.08 + rand() * W * 0.84;
-      const body = Bodies.rectangle(x, -80 - i * (isMobile() ? 70 : 55), w * 0.9, h * 0.86, {
-        chamfer: { radius: Math.min(w, h) * 0.42 },
-        restitution: 0.35, friction: 0.6, frictionAir: 0.012, density: 0.002,
-        angle: rand() * Math.PI,
+      const x = W * 0.06 + rand() * W * 0.88;
+      const y = visTop - h - rand() * 60;
+      const body = Bodies.rectangle(x, y, w * 0.92, h * 0.9, {
+        chamfer: { radius: Math.min(w, h) * 0.45 },
+        restitution: 0.3, friction: 0.5, frictionAir: 0.004, density: 0.002,
+        angle: rand() * Math.PI * 2,
       });
+      Body.setVelocity(body, { x: (rand() - 0.5) * 2, y: 4 + rand() * 4 });
+      Body.setAngularVelocity(body, (rand() - 0.5) * 0.12);
       body.sprite = i % SPRITES.length; body.w = w; body.h = h;
       chipas.push(body);
     }
-    // caen de a una, como una tanda que sale del horno
-    chipas.forEach((b, i) => setTimeout(() => Composite.add(engine.world, b), i * 110));
+    chipas.forEach((b, i) => setTimeout(() => Composite.add(engine.world, b), i * 65));
 
     const draw = () => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
       ctx.clearRect(0, 0, W, H);
       chipas.forEach((b) => {
         const img = images[b.sprite];
@@ -153,7 +162,7 @@
         ctx.save();
         ctx.translate(b.position.x, b.position.y);
         ctx.rotate(b.angle);
-        ctx.shadowColor = 'rgba(0,0,0,.28)'; ctx.shadowBlur = 14; ctx.shadowOffsetY = 6;
+        ctx.shadowColor = 'rgba(0,0,0,.3)'; ctx.shadowBlur = 8; ctx.shadowOffsetY = 4;
         ctx.drawImage(img, -b.w / 2, -b.h / 2, b.w, b.h);
         ctx.restore();
       });
@@ -217,7 +226,8 @@
   new IntersectionObserver(([en], obs) => {
     if (en.isIntersecting) { loadMatter().catch(() => {}); obs.disconnect(); }
   }, { rootMargin: '600px 0px' }).observe(zone);
+  const trigger = zone.querySelector('.cierre__abuela') || zone;
   new IntersectionObserver(([en], obs) => {
     if (en.isIntersecting) { start(); obs.disconnect(); }
-  }, { threshold: 0.35 }).observe(zone);
+  }, { threshold: 0.4 }).observe(trigger);
 })();
