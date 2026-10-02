@@ -36,17 +36,25 @@
   const pin = $('.vj-pin');
   const dest = $('.vj-dest');
   const cities = $('.vj-cities');
+  const stops = $$('.vj-stop');
+  const origin = $('.vj-origin');
 
   // geometría del recorrido para mover el camioncito
   const measure = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   measure.setAttribute('d', root.dataset.route);
   const routeLen = measure.getTotalLength();
   routeDraw.style.strokeDasharray = `${routeLen} ${routeLen}`;
+  stops.forEach((g) => {
+    const c = g.querySelector('circle'); const cx = +c.getAttribute('cx'), cy = +c.getAttribute('cy');
+    let best = 0, bd = Infinity;
+    for (let l = 0; l <= routeLen; l += routeLen / 200) { const q = measure.getPointAtLength(l); const d = (q.x - cx) ** 2 + (q.y - cy) ** 2; if (d < bd) { bd = d; best = l; } }
+    g._t = best / routeLen;
+  });
   const pinXY = pin.getAttribute('transform').match(/translate\(([\d.]+) ([\d.]+)\)/).slice(1).map(Number);
 
   const TRUCK_OFF = 760; // desde la derecha
   const svg = root.querySelector('.viaje__svg');
-  const VB0 = [205, 170, 615, 430], VB1 = [262, 8, 400, 620]; // zoom al mapa
+  const VB0 = [205, 170, 615, 430], VB1 = [262, 8, 400, 620], VB2 = [420, 96, 150, 176]; // escena → mapa → zoom al recorrido
   let lastStep = -1;
 
   const render = (p) => {
@@ -85,16 +93,26 @@
     // 4 · mapa: de Corrientes a tu comercio
     s1.setAttribute('opacity', (1 - seg(p, 0.71, 0.76)).toFixed(3));
     s2.setAttribute('opacity', seg(p, 0.73, 0.79).toFixed(3));
-    const z = easeInOut(seg(p, 0.72, 0.8));
-    svg.setAttribute('viewBox', VB0.map((v, i) => lerp(v, VB1[i], z).toFixed(1)).join(' '));
-    const tr = easeInOut(seg(p, 0.79, 0.94));
+    const z1 = easeInOut(seg(p, 0.72, 0.79));   // de la escena al país entero
+    const z2 = easeInOut(seg(p, 0.79, 0.84)) - easeInOut(seg(p, 0.955, 1)); // acercar al recorrido y volver a abrir
+    const vb = VB0.map((v, i) => lerp(lerp(v, VB1[i], z1), VB2[i], clamp(z2)));
+    svg.setAttribute('viewBox', vb.map((v) => v.toFixed(1)).join(' '));
+    // los textos y el camioncito mantienen su tamaño en pantalla aunque haya zoom
+    const zoomK = vb[2] / VB1[2];
+    root.style.setProperty('--vj-k', zoomK.toFixed(3));
+    origin.setAttribute('transform', `translate(${origin.dataset.x} ${origin.dataset.y}) scale(${zoomK.toFixed(3)})`);
+    stops.forEach((g) => g.querySelector('circle').setAttribute('r', (4.5 * zoomK).toFixed(2)));
+    cities.querySelectorAll('circle').forEach((c) => c.setAttribute('r', (4.5 * zoomK).toFixed(2)));
+    mini.firstElementChild.setAttribute('transform', `scale(${zoomK.toFixed(3)}) translate(-26 -36) scale(0.125)`);
+    const tr = easeInOut(seg(p, 0.83, 0.95));
     routeDraw.style.strokeDashoffset = (routeLen * (1 - tr)).toFixed(1);
     const pt = measure.getPointAtLength(routeLen * tr);
     mini.setAttribute('transform', `translate(${pt.x.toFixed(1)} ${pt.y.toFixed(1)})`);
     mini.setAttribute('opacity', p > 0.78 && tr < 1 ? '1' : '0');
-    const pp = easeBack(seg(p, 0.93, 0.97));
-    pin.setAttribute('transform', `translate(${pinXY[0]} ${pinXY[1]}) scale(${pp.toFixed(3)})`);
-    dest.setAttribute('opacity', seg(p, 0.95, 0.98).toFixed(3));
+    stops.forEach((g) => g.setAttribute('opacity', tr >= g._t ? '1' : '0'));
+    const pp = easeBack(seg(p, 0.945, 0.97));
+    pin.setAttribute('transform', `translate(${pinXY[0]} ${pinXY[1]}) scale(${(pp * zoomK).toFixed(3)})`);
+    dest.setAttribute('opacity', seg(p, 0.95, 0.975).toFixed(3));
     cities.setAttribute('opacity', seg(p, 0.96, 1).toFixed(3));
 
     // textos y barra
