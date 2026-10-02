@@ -341,7 +341,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .sizes input:checked + span { background: var(--azul); border-color: var(--azul); color: var(--crudo); }
 .sizes input:focus-visible + span { outline: 2px solid var(--azul); outline-offset: 2px; }
-.sizes label:hover span { border-color: var(--azul); }
+
 .prod__row {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   margin: 16px 0; padding: 10px 10px 10px 16px;
@@ -358,8 +358,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
   font-family: var(--f-text); font-size: 20px; font-weight: 700; line-height: 1;
   transition: background-color .2s, opacity .2s, transform .15s;
 }
-.qty button:hover { background: #0f2640; }
-.qty button:active { transform: scale(.92); }
+
+.qty button:active { transform: scale(.92); background: var(--azul); color: var(--crudo); }
 .qty button:disabled { background: var(--azul-12); color: var(--azul-60); cursor: default; transform: none; }
 .qty output { min-width: 34px; text-align: center; font-family: var(--f-title); font-size: 24px; line-height: 1; font-variant-numeric: tabular-nums; }
 .line .qty button { width: 32px; height: 32px; font-size: 17px; }
@@ -711,4 +711,70 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .drawer__note { font-size: 12px; }
   .wa-float { width: 54px; height: 54px; }
   .wa-float svg { width: 26px; height: 26px; }
+}
+
+/* ==========================================================================
+   Refinamiento: controles integrados al sistema (sin cajas blancas)
+   ========================================================================== */
+
+/* Tamaño del chipá: control segmentado con filete */
+.sizes { gap: 0; }
+.sizes span {
+  border-radius: 0; border: 1.5px solid rgba(22, 51, 85, .22); background: transparent;
+  color: var(--azul-80);
+}
+.sizes label + label span { border-left-width: 0; }
+.sizes label:first-of-type span { border-radius: var(--pill) 0 0 var(--pill); }
+.sizes label:last-of-type span { border-radius: 0 var(--pill) var(--pill) 0; }
+@media (hover: hover) { .sizes label:hover span { border-color: rgba(22, 51, 85, .22); background: rgba(22, 51, 85, .05); } }
+.sizes input:checked + span { background: var(--azul); color: var(--crudo); border-color: var(--azul); }
+
+/* Cantidad: fila editorial entre filetes, botones de línea */
+.prod__row {
+  background: none; border-radius: 0;
+  margin: 16px 0; padding: 12px 0;
+  border-top: 1px solid var(--azul-12); border-bottom: 1px solid var(--azul-12);
+}
+.qty { gap: 2px; }
+.qty button {
+  background: transparent; color: var(--azul);
+  box-shadow: inset 0 0 0 1.5px rgba(22, 51, 85, .35);
+  font-weight: 400;
+}
+@media (hover: hover) { .qty button:hover { background: var(--azul); color: var(--crudo); box-shadow: inset 0 0 0 1.5px var(--azul); } }
+.qty button:disabled { background: transparent; color: var(--azul); opacity: .25; box-shadow: inset 0 0 0 1.5px rgba(22, 51, 85, .35); }
+.qty output { font-size: 26px; min-width: 40px; }
+
+/* Campos: línea inferior, sobre el fondo del sistema */
+.field input, .field select, .field textarea {
+  background: transparent; border: 0; border-radius: 0;
+  border-bottom: 1.5px solid rgba(22, 51, 85, .25);
+  padding: 10px 0; min-height: 46px;
+}
+.field textarea { border: 1.5px solid rgba(22, 51, 85, .25); border-radius: 8px; padding: 12px; }
+.field select { background-position: right 2px center; padding-right: 28px; }
+.field input:focus, .field select:focus { background: transparent; border-bottom-color: var(--azul); }
+.field textarea:focus { background: transparent; border-color: var(--azul); }
+.field.is-invalid input, .field.is-invalid select { border-bottom-color: #b3261e; }
+.field input::placeholder { color: var(--azul-60); }
+
+.form-card { background: var(--papel); box-shadow: none; }
+
+/* Drawer del pedido */
+.drawer__panel { background: var(--crudo); }
+.drawer__x { background: transparent; box-shadow: inset 0 0 0 1.5px rgba(22, 51, 85, .25); font-size: 24px; }
+@media (hover: hover) { .drawer__x:hover { background: var(--azul); color: var(--crudo); } }
+.drawer__list { gap: 0; border-top: 1px solid var(--azul-12); }
+.line { background: none; border-radius: 0; padding: 14px 0; border-bottom: 1px solid var(--azul-12); }
+.line img { background: var(--papel); border-radius: 8px; }
+.line__t { font-family: var(--f-title); font-weight: 400; font-size: 20px; letter-spacing: var(--track-title); }
+.line .qty button { width: 32px; height: 32px; font-size: 16px; }
+.line .qty output { font-size: 20px; min-width: 28px; }
+.drawer__total { border-top: 0; padding-top: 4px; }
+.drawer__fields { gap: 6px; }
+.drawer__fields input { background: transparent; }
+@media (max-width: 767px) {
+  .qty button { width: 36px; height: 36px; }
+  .qty output { font-size: 22px; min-width: 34px; }
+  .line__t { font-size: 18px; }
 }
