@@ -917,7 +917,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .viaje__steps h3 { font-size: 26px; margin-bottom: 4px; }
   .viaje__steps p { font-size: 16px; max-width: 30em; }
   .viaje__bar { margin-top: 36px; max-width: 420px; }
-  .viaje__scene { height: auto; align-self: stretch; margin: 7vh 4vw 7vh 2vw; }
+  .viaje__scene { height: auto; align-self: stretch; margin: 16vh 9vw 16vh 6vw; }
 }
 
 /* sin animaciones: la escena final quieta y todos los pasos visibles */
