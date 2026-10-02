@@ -898,10 +898,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .viaje__steps p { margin: 0; font-size: 14px; color: var(--azul-80); }
 .viaje__bar { height: 2px; background: var(--azul-12); margin-top: 14px; border-radius: 2px; overflow: hidden; }
 .viaje__bar span { display: block; height: 100%; width: 100%; background: var(--azul); transform-origin: left; transform: scaleX(0); }
-.viaje__scene { min-height: 0; display: grid; place-items: center; padding-inline: 8px; }
-.viaje__svg { width: 100%; height: 100%; max-height: 100%; overflow: visible; }
-.vj-label { font-family: var(--f-text); font-size: 17px; font-weight: 700; fill: var(--azul); }
-.vj-dest { font-size: 19px; }
+.viaje__scene { position: relative; min-height: 0; margin-inline: 8px; }
+.viaje__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
+.vj-label { font-family: var(--f-text); font-size: 13px; font-weight: 700; fill: var(--azul); paint-order: stroke; stroke: var(--crudo); stroke-width: 4px; stroke-linejoin: round; }
+.vj-dest { font-size: 15px; }
 
 @media (min-width: 960px) {
   .viaje__track { height: 460vh; }
@@ -915,7 +915,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .viaje__steps h3 { font-size: 26px; margin-bottom: 4px; }
   .viaje__steps p { font-size: 16px; max-width: 30em; }
   .viaje__bar { margin-top: 36px; max-width: 420px; }
-  .viaje__scene { height: 100%; padding: 6vh 4vw 6vh 2vw; }
+  .viaje__scene { height: auto; align-self: stretch; margin: 7vh 4vw 7vh 2vw; }
 }
 
 /* sin animaciones: la escena final quieta y todos los pasos visibles */
@@ -925,4 +925,5 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .viaje__steps { min-height: 0; display: grid; gap: 14px; }
   .viaje__steps li { position: static; opacity: 1; transform: none; }
   .viaje__scene { height: 60vh; }
+  .viaje__svg { position: static; }
 }

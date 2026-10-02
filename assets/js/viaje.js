@@ -45,6 +45,8 @@
   const pinXY = pin.getAttribute('transform').match(/translate\(([\d.]+) ([\d.]+)\)/).slice(1).map(Number);
 
   const TRUCK_OFF = 760; // desde la derecha
+  const svg = root.querySelector('.viaje__svg');
+  const VB0 = [205, 170, 615, 430], VB1 = [262, 8, 400, 620]; // zoom al mapa
   let lastStep = -1;
 
   const render = (p) => {
@@ -83,6 +85,8 @@
     // 4 · mapa: de Corrientes a tu comercio
     s1.setAttribute('opacity', (1 - seg(p, 0.71, 0.76)).toFixed(3));
     s2.setAttribute('opacity', seg(p, 0.73, 0.79).toFixed(3));
+    const z = easeInOut(seg(p, 0.72, 0.8));
+    svg.setAttribute('viewBox', VB0.map((v, i) => lerp(v, VB1[i], z).toFixed(1)).join(' '));
     const tr = easeInOut(seg(p, 0.79, 0.94));
     routeDraw.style.strokeDashoffset = (routeLen * (1 - tr)).toFixed(1);
     const pt = measure.getPointAtLength(routeLen * tr);
