@@ -440,7 +440,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .perks img { width: 56px; height: 56px; object-fit: contain; }
 .perks h3 { font-family: var(--f-title); font-size: 24px; line-height: 1.1; letter-spacing: var(--track-title); margin-bottom: 4px; }
 .perks p { margin: 0; font-size: 16px; color: var(--azul-60); }
-.comercios__photo img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius); }
+.comercios__photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); }
 .comercios__photo { display: none; }
 
 .form-card {
