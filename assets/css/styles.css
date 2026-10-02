@@ -941,14 +941,15 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @media (max-width: 959px) {
   .viaje__stage { padding-top: 18px; }
   .viaje__copy .eyebrow { margin-bottom: 6px; }
-  .viaje__title { font-size: 22px; line-height: 1.1; margin-bottom: 18px; }
+  .viaje__title { font-size: 28px; line-height: 1.06; margin-bottom: 30px; }
   .viaje__steps { min-height: 0; display: grid; }
   .viaje__steps li { position: relative; grid-area: 1 / 1; grid-template-columns: 1fr; gap: 4px; align-content: start; }
   .viaje__steps li:not(.is-on) { transition-duration: .12s; visibility: hidden; transition-property: opacity, transform, visibility; }
-  .viaje__n { font-family: var(--f-text); font-size: 11px; font-weight: 700; letter-spacing: .14em; color: var(--azul-60); }
+  .viaje__n { font-family: var(--f-text); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--azul-60); }
   .viaje__n::before { content: "Paso "; }
   .viaje__n::after { content: " de 04"; }
-  .viaje__steps h3 { font-size: 28px; line-height: 1.05; margin-bottom: 6px; }
-  .viaje__steps p { font-size: 15px; line-height: 1.45; }
-  .viaje__bar { margin-top: 14px; }
+  .viaje__steps h3 { font-size: 18px; line-height: 1.15; margin-bottom: 4px; }
+  .viaje__steps p { font-size: 13.5px; line-height: 1.45; color: var(--azul-60); }
+  .viaje__bar { margin-top: 14px; gap: 4px; }
+  .viaje__bar span { height: 2px; }
 }
