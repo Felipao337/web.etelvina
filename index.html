@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="https://use.typekit.net/tqk6yym.css">
   <link rel="preload" href="/assets/fonts/caveat-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/assets/img/abuela-9642-900.webp" imagesrcset="/assets/img/abuela-9642-900.webp 900w, /assets/img/abuela-9642-1800.webp 1800w" imagesizes="(min-width: 960px) 50vw, 100vw">
-  <link rel="stylesheet" href="/assets/css/styles.css?v=15">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=17">
 
   <script type="application/ld+json">
   {
@@ -307,17 +307,89 @@
       </div>
     </section>
 
-    <!-- ============ MOMENTOS ============ -->
-    <section class="momentos section" aria-labelledby="momentos-t">
-      <div class="wrap momentos__head">
-        <h2 class="h2 reveal" id="momentos-t">Mate, chipá y una mesa llena.</h2>
-        <p class="note reveal">No hace falta mucho más.</p>
-      </div>
-      <div class="momentos__grid wrap">
-        <figure class="m m--tall reveal"><img src="/assets/img/abuela-9655-900.webp" srcset="/assets/img/abuela-9655-900.webp 900w, /assets/img/abuela-9655-1800.webp 1800w" sizes="(min-width: 960px) 33vw, 50vw" alt="La abuela sosteniendo un chipá con las dos manos" width="1200" height="1800" loading="lazy"></figure>
-        <figure class="m m--sq reveal"><img src="/assets/img/plato-3-640.webp" srcset="/assets/img/plato-3-640.webp 640w, /assets/img/plato-3-1200.webp 1200w" sizes="(min-width: 960px) 33vw, 50vw" alt="Chipás horneados en una fuente de madera" width="1200" height="1200" loading="lazy"></figure>
-        <figure class="m m--sq reveal"><img src="/assets/img/plato-1-640.webp" srcset="/assets/img/plato-1-640.webp 640w, /assets/img/plato-1-1200.webp 1200w" sizes="(min-width: 960px) 33vw, 50vw" alt="Plato a cuadros azules con chipás" width="1200" height="1200" loading="lazy"></figure>
-        <figure class="m m--wide reveal"><img src="/assets/img/foto-06771-900.webp" srcset="/assets/img/foto-06771-900.webp 900w, /assets/img/foto-06771-1800.webp 1800w" sizes="(min-width: 960px) 66vw, 100vw" alt="Chipás recién horneados delante de la bolsa Etelvina" width="1800" height="1200" loading="lazy"></figure>
+    <!-- ============ CÓMO LLEGA (animación en scroll) ============ -->
+    <section class="viaje" id="como-llega" aria-labelledby="viaje-t" data-viaje data-route="M504.0,124.5 Q630.5,187.7 510.5,250.8">
+      <div class="viaje__track">
+        <div class="viaje__stage">
+          <div class="viaje__copy wrap">
+            <p class="eyebrow">Cómo llega</p>
+            <h2 class="h2 viaje__title" id="viaje-t">De la cocina de Corrientes, al resto del país.</h2>
+            <ol class="viaje__steps" role="list">
+              <li class="is-on"><span class="viaje__n">01</span><div><h3>Directo a la bolsa.</h3><p>Cada chipá se arma a mano y va crudo a su bolsa, listo para congelar.</p></div></li>
+              <li><span class="viaje__n">02</span><div><h3>Cerrada y aprobada.</h3><p>Se sella al momento y lleva el sello de la abuela.</p></div></li>
+              <li><span class="viaje__n">03</span><div><h3>Sale con transporte propio.</h3><p>Viaja en nuestros camiones, con la cadena de frío cuidada de punta a punta.</p></div></li>
+              <li><span class="viaje__n">04</span><div><h3>Llega a tu comercio.</h3><p>De Corrientes a todo el país, con un día de entrega semanal o mensual.</p></div></li>
+            </ol>
+            <div class="viaje__bar" aria-hidden="true"><span data-viaje-bar></span></div>
+          </div>
+          <div class="viaje__scene">
+        <svg class="viaje__svg" viewBox="0 0 800 640" role="img" aria-labelledby="viaje-svg-t">
+          <title id="viaje-svg-t">Los chipás crudos caen en la bolsa, la bolsa se cierra con el sello Aprobado por la abuela, sube al camión de Etelvina y viaja desde Corrientes hasta tu comercio.</title>
+          <defs>
+            <symbol id="vj-cr" viewBox="-30 -30 60 60">
+              <path d="M-26,4 C-27,-14 -12,-25 2,-24 C17,-23 27,-11 26,4 C25,18 13,25 0,25 C-14,25 -25,18 -26,4Z" fill="#f6ead2" stroke="#163355" stroke-width="4.5" stroke-linejoin="round"/>
+              <circle cx="-9" cy="-7" r="2.8" fill="#163355"/><circle cx="7" cy="-11" r="2.4" fill="#163355"/><circle cx="5" cy="7" r="2.8" fill="#163355"/><circle cx="-11" cy="9" r="2" fill="#163355"/><circle cx="15" cy="2" r="1.8" fill="#163355"/>
+            </symbol>
+            <g id="vj-wheel"><circle r="32" fill="#163355"/><circle r="14" fill="#F3F3E9"/><circle r="4" fill="#163355"/><rect x="-2.5" y="-28" width="5" height="10" rx="2" fill="#F3F3E9" opacity=".55"/></g>
+            <clipPath id="vj-zip-clip"><rect class="vj-zip-reveal" x="230" y="226" width="0" height="44"/></clipPath>
+            <mask id="vj-route-mask"><path class="vj-route-draw" d="M504.0,124.5 Q630.5,187.7 510.5,250.8" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"/></mask>
+          </defs>
+
+          <!-- ESCENA 1: bolsa + camión -->
+          <g class="vj-s1">
+            <path d="M30,574 C200,570 420,577 780,572" fill="none" stroke="#163355" stroke-width="4" stroke-linecap="round"/>
+            <g class="vj-truck" transform="translate(700 0)">
+              <g class="vj-speed" opacity="0" stroke="#163355" stroke-width="5" stroke-linecap="round"><path d="M420,330 H370"/><path d="M430,400 H360"/><path d="M420,470 H380"/></g>
+              <rect x="468" y="290" width="234" height="226" rx="12" fill="#fbf8ef" stroke="#163355" stroke-width="6"/>
+              <path d="M488,302 V504" stroke="#163355" stroke-width="4" stroke-linecap="round"/>
+              <rect class="vj-door" x="474" y="298" width="0" height="210" fill="#163355"/>
+              <image href="/assets/brand/logo-azul.svg" x="522" y="352" width="160" height="46"/>
+              <image href="/assets/brand/ico-detalles-1-azul.svg" x="556" y="410" width="92" height="30"/>
+              <path d="M702,362 L760,362 Q786,364 796,402 L808,452 L808,516 L702,516 Z" fill="#163355" stroke="#163355" stroke-width="6" stroke-linejoin="round"/>
+              <path d="M718,378 L756,378 Q770,380 778,412 L718,412 Z" fill="#F3F3E9"/>
+              <rect x="790" y="470" width="14" height="12" rx="3" fill="#F3F3E9"/>
+              <rect x="462" y="512" width="350" height="18" rx="7" fill="#163355"/>
+              <use href="#vj-wheel" class="vj-wheel" data-cx="536" data-cy="542"/>
+              <use href="#vj-wheel" class="vj-wheel" data-cx="636" data-cy="542"/>
+              <use href="#vj-wheel" class="vj-wheel" data-cx="762" data-cy="542"/>
+            </g>
+            <g class="vj-bag">
+              <path d="M240,250 Q234,400 244,552 Q340,568 436,552 Q446,400 440,250 Z" fill="rgba(255,255,255,.55)" stroke="none"/>
+              <g class="vj-chipa" data-x="292" data-y="515" data-r="0"><use href="#vj-cr" x="-30" y="-30" width="60" height="60"/></g><g class="vj-chipa" data-x="343" data-y="519" data-r="47"><use href="#vj-cr" x="-30" y="-30" width="60" height="60"/></g><g class="vj-chipa" data-x="394" data-y="513" data-r="94"><use href="#vj-cr" x="-30" y="-30" width="60" height="60"/></g><g class="vj-chipa" data-x="312" data-y="470" data-r="141"><use href="#vj-cr" x="-30" y="-30" width="60" height="60"/></g><g class="vj-chipa" data-x="364" data-y="468" data-r="188"><use href="#vj-cr" x="-30" y="-30" width="60" height="60"/></g><g class="vj-chipa" data-x="412" data-y="474" data-r="235"><use href="#vj-cr" x="-30" y="-30" width="60" height="60"/></g><g class="vj-chipa" data-x="285" data-y="425" data-r="282"><use href="#vj-cr" x="-30" y="-30" width="60" height="60"/></g><g class="vj-chipa" data-x="338" data-y="423" data-r="329"><use href="#vj-cr" x="-30" y="-30" width="60" height="60"/></g><g class="vj-chipa" data-x="390" data-y="428" data-r="16"><use href="#vj-cr" x="-30" y="-30" width="60" height="60"/></g><g class="vj-chipa" data-x="310" data-y="378" data-r="63"><use href="#vj-cr" x="-30" y="-30" width="60" height="60"/></g><g class="vj-chipa" data-x="362" data-y="374" data-r="110"><use href="#vj-cr" x="-30" y="-30" width="60" height="60"/></g>
+              <path d="M240,250 Q234,400 244,552 Q340,568 436,552 Q446,400 440,250 Z" fill="rgba(255,255,255,.18)" stroke="#163355" stroke-width="6" stroke-linejoin="round"/>
+              <path d="M262,262 Q256,400 262,540" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".7"/>
+              <rect x="243" y="318" width="194" height="64" fill="#163355"/>
+              <image href="/assets/brand/logo-crudo.svg" x="272" y="330" width="136" height="40"/>
+              <g clip-path="url(#vj-zip-clip)">
+                <rect x="236" y="232" width="208" height="30" rx="8" fill="#F3F3E9" stroke="#163355" stroke-width="6"/>
+                <path d="M250,247 H430" stroke="#163355" stroke-width="3" stroke-dasharray="8 7" stroke-linecap="round"/>
+              </g>
+              <g class="vj-stamp" transform="translate(410 488) scale(0)"><circle r="44" fill="#F3F3E9"/><image href="/assets/brand/ico-aprobado-azul.svg" x="-46" y="-46" width="92" height="92"/></g>
+            </g>
+          </g>
+
+          <!-- ESCENA 2: mapa -->
+          <g class="vj-s2" opacity="0">
+            <g transform="translate(290 24) scale(0.92)"><path d="M251.9,161.5L250.2,165.3L248.4,167.4L248.6,171.6L248.7,174.4L247.3,176.7L247.8,179.2L246.5,182.9L245.2,185.2L245.6,187.4L245.6,190.3L244.2,193.2L242.7,195L243.3,197.4L243.1,200L243.8,202.6L242.6,205.5L243,214.9L241.8,217.2L239.1,217.8L238.5,221.2L237.1,228.5L238.5,233L239.3,236.1L239.6,238.7L237.5,240.6L238.4,243.7L241.3,248.1L249.4,252.2L252.9,254.6L256.7,257.8L258.8,261.2L259,263.9L255.9,268.1L255.6,271.5L256.2,274L257.3,276.2L260.3,279.2L262.5,280.2L265.5,280.1L266.7,287.6L265.8,291.9L260.1,301.3L255.2,307.1L253.5,310.2L252.9,313.6L251.3,315.2L242.9,320.4L229.9,324.9L219.3,327.3L216.9,328.1L199.9,330.7L196.6,331.1L192.4,330.9L188.9,331.2L185,330.5L181.6,329.7L179.6,327.6L177.3,327.4L177.8,331L177.3,334.1L179.3,336.3L181.8,338.4L181.3,342.2L180.6,347.1L178.6,348.2L176.3,354.3L175.9,357.3L178.7,363.5L177.9,366.2L170,370.7L167.5,371.9L163.5,372.7L157,372.8L154.7,372.6L149.1,369.9L145,368.2L141.3,366.9L137.6,366.2L134.2,366L132.9,368.7L132.8,371.8L133.3,374.3L135,380.6L135.2,384.1L134.4,388.4L135.5,391L140.1,393.3L142.6,393.9L142,397L144.4,397.4L146.9,397.1L149.5,396.6L150.1,394.1L147.1,393.8L149.8,392.5L152.8,391.4L155.3,392L156.9,394.5L157.4,396.8L157.5,399.7L157.1,402.4L155.9,404.5L150.5,406L147.6,403.6L147.2,401.4L143.4,398.9L140.8,399.2L138.2,401.2L135.7,401.8L141.1,406.5L144.1,407.3L139.8,410.9L137.8,411.9L135.5,413.9L132.3,418.3L130.8,420.4L130.5,423.4L131.5,428.5L130.4,430.6L131.1,432.9L129.6,436.7L125.1,440.3L124.3,442.9L125.7,445.7L123.4,446.9L116.5,446.1L114,447.4L111.7,449.1L105.6,451.2L99.7,457.9L97.5,461.7L95,465.5L94.1,469.3L94.8,472.7L97.6,476.7L107.3,485.4L119.6,487.1L121.8,488.3L123.1,490.2L123.1,496.2L121.3,498.8L118.9,500.4L116,501.2L120.6,501.2L122.5,503.4L120.4,504.9L113.3,511.1L110.1,512.6L107.2,514.6L103.2,516.7L99.6,520.2L96.4,522.9L92.9,528.6L91.4,540.4L89.3,542.8L85.6,544.8L81.6,543.9L79,540.5L77.4,538.3L77.5,541.8L73.6,542.5L76.1,542.8L78.5,543.3L80.5,544.8L78.7,547.4L76.2,548.5L73.2,550.4L71.5,552.7L70,557.6L68.5,561.4L66.5,562.9L69,562.2L71.2,568.2L71.7,570.9L68.7,573.1L66.5,573.1L69.3,575.1L71.7,574.6L73.5,576.1L77.1,581.9L80.2,585.4L81.7,587.5L78.7,586.9L73.4,585.6L68.9,584.2L64.5,584.2L60.9,583.1L57,581.8L48.8,581.7L41.5,581.6L34.1,581.5L29.3,581.4L26.1,581.4L24.4,578.1L22.7,576.7L20.6,575.6L18.4,572.8L20,568.1L19.2,565.6L20,563L20.5,560.6L20.1,558.3L18.7,555.3L15.1,555.5L12.2,555.3L9.8,556.5L7.8,557.7L6.3,556L5.1,553.8L4.1,550.1L3,547.5L1.2,545.5L0.7,541.4L1.6,539.1L0,535L0.3,532.7L1.8,529.9L6.9,529.6L6.8,527.4L8.6,524.1L11.2,522.7L13.3,521.8L15.2,519.8L15.6,517.3L15.3,514.6L17,512.6L19.3,511.6L20.2,509L19.7,506.7L18.4,504.9L16.7,502.2L18.3,498.5L19.5,496.3L20.4,493.9L23.2,491.9L24.2,489.9L26.4,489.2L25.6,487L25.6,484.1L27.1,481.3L29.1,479.6L29.6,477.2L29.1,474.3L28.3,471.4L26.8,469.1L29.8,466.8L29.9,463.7L28.5,460.7L28.9,457.9L32.6,456.6L35.1,453.2L33.6,450L32.3,448.1L27.8,445.4L24.2,444.9L23.9,442.4L28.3,442.4L31.8,442.2L35,442.6L37.1,439.7L38.3,437.1L35.5,435.7L27.7,434.9L27.5,432.2L27.8,429.6L29.4,427.2L29.4,424.8L28.1,422.8L29.1,420.7L27.5,418.4L26.4,415L28.6,414L28.3,411.5L24,410.2L22.5,408.1L23.1,404L22.8,401.5L23.2,399.1L23.6,395.9L23.9,393L27,391.9L28.8,389.9L27.3,384.6L26.2,382.3L26.6,377.3L26.8,369.6L25.8,365.7L26.7,362.4L27.9,359L29.6,356.9L28,355.2L28,352.9L30.2,350.9L30.6,348.3L29.6,344.8L30.3,342.7L32.3,341.3L33.3,339L34,336.8L33.9,330.9L36.1,328.3L39.2,326.6L41.4,326.2L42.9,323.6L42.2,321.5L40.6,318L40.3,315.7L40.2,312.7L39.1,310.2L38,307.4L37.7,304.9L38.5,301.3L37.5,298.5L38.8,294.9L38.1,291.2L38.1,288.1L39.6,285.9L39.8,283.5L42.1,281.6L44.6,281L46.6,277.5L49.2,276L50,272.9L50.4,269L49.8,265.9L49.2,262.9L49,260.5L48.1,258.3L50.2,257L51.1,252.7L51.9,249.9L53.1,246.1L54.8,243.2L55.6,240.7L58.3,239.8L58.6,236.5L58.3,233.6L58.1,229.8L58.3,227.3L59,224.7L59.4,222.3L58,220.5L55.1,219.6L54.9,216.2L56.1,213.4L53.6,208.5L53.7,205.5L52.4,202.4L51,199.8L50.8,197.2L52.4,195.6L50.2,194.2L48.1,190L47.5,185.4L48,181.4L49,179.3L51.5,177.6L50.9,175.3L52.1,170.9L53.3,167.6L53.7,165.3L57.1,164.8L58.2,162L57,159.4L57.6,155.5L56.7,149.2L56,144.9L58,141.5L59.4,139.5L60.5,134.5L60.6,131.7L61.9,127.4L63.9,124.9L65.3,123.1L66.8,120.7L68.2,118.9L69.7,116.5L71.5,111.1L72.2,108.8L74.2,104.9L75.8,102.3L78.6,102.8L81.6,101L82.9,97.8L80.3,93.7L78.8,90.8L78.9,87.6L81.4,83.8L79.9,75.9L78.5,70.9L79.5,66.2L81.2,64.5L80.9,61.6L79.6,59.6L79.1,56.7L80,54.5L82.3,51.9L84,49.9L87.2,48.3L89.7,47L94.7,44.6L98.1,43L100.3,35.3L102.3,27.8L103.6,23.1L100.6,19.6L102.9,16.3L103.9,13.6L106.9,11.7L107.7,9L111.5,6.9L113.8,6L115.1,2.8L115.6,0.5L118,0.6L121.7,4.2L124.5,6L127.1,5.7L134.4,5.8L137.8,6.6L140,7.4L142.8,11L143.5,13.2L145.2,18.5L146.9,15.4L147.8,13.3L149,10.9L151.5,5.2L153.3,3.9L155.6,4.3L162.6,3.8L169.3,3.8L170.9,6.9L172.8,8.9L176.7,12.3L179.2,15.6L181.6,20.6L183.7,24.2L185.8,26.6L187.7,28.3L190.3,30L192,31.9L195.1,33.8L197.1,35.7L200.9,39.6L206.2,41.6L210,42.6L212.4,42.5L215.9,44.1L220.4,47.5L223.1,49.8L227,53.2L234.3,57.5L237.5,58.6L240,60.8L243.6,61.2L246.4,62.6L248.5,64.2L251.3,67.9L252.6,70.7L251.6,73.1L249.6,75L247.9,79.1L246.6,81.9L244.4,83.5L243.6,85.7L242.5,88.2L242.7,92.3L241.8,94.9L240.5,96.7L238.8,98.6L237.8,100.7L236,102.6L236.2,106.2L243.1,105.4L248.7,106.2L255.4,108.4L259.7,109.2L261.9,108.5L264.6,109.5L267.7,109.1L270.4,110.8L272.4,108.6L274.7,106.3L278.1,106.4L280.6,108.1L283.1,107L283.6,104.1L285.2,102.3L286.3,100.3L289.8,99.3L291.6,97.1L293.6,95.5L295.8,93.4L296.9,91.1L298.1,86.8L298.9,81L299.1,72.7L301.8,73.6L304.9,72.6L307.5,72.6L309.5,74.1L311,76L311.6,80.1L312.8,82.4L314,85.2L313.4,87.6L312.9,93.7L313.1,96.4L312.7,99.7L311.4,102.4L308.2,104.8L305.6,105.7L303.7,108.3L301.2,108.9L298.3,110.3L295.7,110.7L294.6,112.7L292.4,114.9L289.2,117.4L286.6,120.1L283.9,121.7L281.6,123.3L282.4,126L279.5,126.2L278.4,128.5L276.8,130.6L273.7,133.6L272.2,135.8L271.1,138.6L269.8,140.4L267.2,142.5L265.1,146.7L262.5,150.1L260.1,152.4L258,153.7L256.5,156.7L255.1,158.5L252.6,160.6ZM77.6,636.6L77.8,632.2L77.9,626.4L77.9,621.1L77.9,616.1L77.9,610.8L78,605.5L78,599.9L78,594.2L82.6,598.9L84.2,602.4L81.2,601.9L79.7,604.3L81.8,606.5L85.4,606.8L87.8,611.7L90.1,613.6L93,616L95.8,618.6L99.1,621.1L102.6,623L105.9,624.4L108.9,626.2L112.2,628.6L115.8,630.4L119.6,631.6L123.5,632.7L129.5,632.3L132.4,633.2L131.3,635.3L129.8,637L125.8,638L122,637.6L118.6,638.5L115,639L111.4,640L104.8,637.9L101.7,637.5L91.2,636.9L87.9,636.5L84.5,635.9L80.2,636.2L77.6,636.6ZM142.4,633.9L147.6,634L150.2,634.2L153,634L151.5,635.7L146,635.5L143.9,636.3L141,637.5L139.1,636L141.2,635Z" fill="#ebebdf" stroke="#163355" stroke-width="4.3" stroke-linejoin="round"/></g>
+            <g class="vj-cities" opacity="0" fill="#163355"><circle class="vj-city" cx="426.3" cy="194.4" r="6"/><circle class="vj-city" cx="477.6" cy="221.5" r="6"/><circle class="vj-city" cx="358.7" cy="220.5" r="6"/><circle class="vj-city" cx="411.5" cy="112.6" r="6"/><circle class="vj-city" cx="370.0" cy="327.9" r="6"/><circle class="vj-city" cx="522.6" cy="311.0" r="6"/></g>
+            <path d="M504.0,124.5 Q630.5,187.7 510.5,250.8" fill="none" stroke="#163355" stroke-width="5" stroke-dasharray="2 12" stroke-linecap="round" mask="url(#vj-route-mask)"/>
+            <g transform="translate(504.0 124.5)"><circle r="11" fill="#163355"/><circle r="4.5" fill="#F3F3E9"/></g>
+            <text class="vj-label" x="484.0" y="130.5" text-anchor="end">Corrientes</text>
+            <g class="vj-pin" transform="translate(510.5 250.8) scale(0)">
+              <path d="M0,0 C-6,-12 -20,-22 -20,-36 A20,20 0 1 1 20,-36 C20,-22 6,-12 0,0Z" fill="#163355"/><circle cy="-36" r="7.5" fill="#F3F3E9"/>
+            </g>
+            <text class="vj-label vj-dest" x="480.5" y="228.8" text-anchor="end" opacity="0">Tu comercio</text>
+            <g class="vj-mini" transform="translate(504.0 124.5)" opacity="0">
+              <g transform="translate(-42 -56) scale(0.2)">
+                <rect x="0" y="0" width="234" height="226" rx="16" fill="#fbf8ef" stroke="#163355" stroke-width="24"/>
+                <path d="M234,72 L292,72 Q318,74 328,112 L340,162 L340,226 L234,226 Z" fill="#163355"/>
+                <circle cx="68" cy="252" r="34" fill="#163355"/><circle cx="294" cy="252" r="34" fill="#163355"/>
+              </g>
+            </g>
+          </g>
+        </svg>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -487,7 +559,8 @@
     <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01Zm-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c.01 4.54-3.68 8.23-8.22 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28Z"/></symbol>
   </svg>
 
-  <script src="/assets/js/main.js?v=15" defer></script>
-  <script src="/assets/js/chipas.js?v=15" defer></script>
+  <script src="/assets/js/main.js?v=17" defer></script>
+  <script src="/assets/js/chipas.js?v=17" defer></script>
+  <script src="/assets/js/viaje.js?v=17" defer></script>
 </body>
 </html>

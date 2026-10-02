@@ -872,3 +872,57 @@ button, input, select, textarea { font: inherit; color: inherit; }
   padding: 0 14px 0 18px; margin-left: 2px;
 }
 .order-bar__btn { padding-right: 6px; }
+
+/* ==========================================================================
+   Cómo llega: animación de logística ligada al scroll
+   ========================================================================== */
+.viaje { position: relative; background: var(--crudo); }
+.viaje__track { height: 420vh; }
+.viaje__stage {
+  position: sticky; top: var(--header-h);
+  height: calc(100svh - var(--header-h));
+  display: grid; grid-template-rows: auto 1fr; align-content: start;
+  padding: 24px 0 16px; overflow: hidden;
+}
+.viaje__title { margin-bottom: 14px; }
+.viaje__steps { position: relative; min-height: 64px; }
+.viaje__steps li {
+  position: absolute; inset: 0 0 auto 0;
+  display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .45s var(--ease), transform .45s var(--ease);
+}
+.viaje__steps li.is-on { opacity: 1; transform: none; }
+.viaje__n { font-family: var(--f-title); font-size: 20px; line-height: 1.1; color: var(--azul-60); }
+.viaje__steps h3 { font-family: var(--f-title); font-size: 20px; line-height: 1.1; letter-spacing: var(--track-title); margin-bottom: 2px; }
+.viaje__steps p { margin: 0; font-size: 14px; color: var(--azul-80); }
+.viaje__bar { height: 2px; background: var(--azul-12); margin-top: 14px; border-radius: 2px; overflow: hidden; }
+.viaje__bar span { display: block; height: 100%; width: 100%; background: var(--azul); transform-origin: left; transform: scaleX(0); }
+.viaje__scene { min-height: 0; display: grid; place-items: center; padding-inline: 8px; }
+.viaje__svg { width: 100%; height: 100%; max-height: 100%; overflow: visible; }
+.vj-label { font-family: var(--f-text); font-size: 17px; font-weight: 700; fill: var(--azul); }
+.vj-dest { font-size: 19px; }
+
+@media (min-width: 960px) {
+  .viaje__track { height: 460vh; }
+  .viaje__stage { grid-template-columns: 5fr 7fr; grid-template-rows: 1fr; align-items: center; padding: 0; }
+  .viaje__copy { padding-right: 0; max-width: none; margin: 0; padding-left: max(var(--gutter), calc((100vw - var(--maxw)) / 2 + var(--gutter))); }
+  .viaje__title { margin-bottom: 36px; font-size: clamp(40px, 3.6vw, 56px); }
+  .viaje__steps { min-height: 0; display: grid; gap: 22px; }
+  .viaje__steps li { position: static; opacity: .32; transform: none; }
+  .viaje__steps li.is-on { opacity: 1; }
+  .viaje__n { font-size: 24px; }
+  .viaje__steps h3 { font-size: 26px; margin-bottom: 4px; }
+  .viaje__steps p { font-size: 16px; max-width: 30em; }
+  .viaje__bar { margin-top: 36px; max-width: 420px; }
+  .viaje__scene { height: 100%; padding: 6vh 4vw 6vh 2vw; }
+}
+
+/* sin animaciones: la escena final quieta y todos los pasos visibles */
+@media (prefers-reduced-motion: reduce) {
+  .viaje__track { height: auto; }
+  .viaje__stage { position: static; height: auto; }
+  .viaje__steps { min-height: 0; display: grid; gap: 14px; }
+  .viaje__steps li { position: static; opacity: 1; transform: none; }
+  .viaje__scene { height: 60vh; }
+}
