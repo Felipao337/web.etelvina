@@ -863,3 +863,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .order-bar__cta { height: 40px; font-size: 14px; padding: 0 16px 0 18px; }
   .order-bar__kg { font-size: 14px; }
 }
+
+/* Barra del pedido: toda azul */
+.order-bar__count { background: rgba(243, 243, 233, .14); color: var(--crudo); }
+.order-bar__cta {
+  background: transparent; color: var(--crudo);
+  border-left: 1px solid rgba(243, 243, 233, .22); border-radius: 0;
+  padding: 0 14px 0 18px; margin-left: 2px;
+}
+.order-bar__btn { padding-right: 6px; }
