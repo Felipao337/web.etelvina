@@ -878,7 +878,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
    Cómo llega: animación de logística ligada al scroll
    ========================================================================== */
 .viaje { position: relative; background: var(--crudo); }
-.viaje__track { height: 420vh; }
+.viaje__track { height: 480vh; }
 .viaje__stage {
   position: sticky; top: var(--header-h);
   height: calc(100svh - var(--header-h));
@@ -908,7 +908,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .vj-small { font-size: calc(11px * var(--vj-k, 1)); font-weight: 400; }
 
 @media (min-width: 960px) {
-  .viaje__track { height: 460vh; }
+  .viaje__track { height: 520vh; }
   .viaje__stage { grid-template-columns: 5fr 7fr; grid-template-rows: 1fr; align-items: center; padding: 0; }
   .viaje__copy { padding-right: 0; max-width: none; margin: 0; padding-left: max(var(--gutter), calc((100vw - var(--maxw)) / 2 + var(--gutter))); }
   .viaje__title { margin-bottom: 36px; font-size: clamp(40px, 3.6vw, 56px); }

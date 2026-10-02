@@ -133,7 +133,10 @@
     const stage = root.querySelector('.viaje__stage').offsetHeight;
     return clamp(-r.top / Math.max(1, r.height - stage));
   };
-  const frame = () => { ticking = false; render(progress()); };
+  // la animación termina antes del final del recorrido: queda un tramo de pausa
+  // con la escena final quieta, y recién después la sección se suelta sin salto
+  const HOLD = 0.82;
+  const frame = () => { ticking = false; render(clamp(progress() / HOLD)); };
   const onScroll = () => { if (active && !ticking) { ticking = true; requestAnimationFrame(frame); } };
   new IntersectionObserver(([en]) => { active = en.isIntersecting; if (active) frame(); }, { rootMargin: '100px 0px' }).observe(root);
   window.addEventListener('scroll', onScroll, { passive: true });
