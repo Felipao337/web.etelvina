@@ -32,6 +32,7 @@
   const PER_KG = { 'pequeño': 25, mediano: 16, grande: 12 }; // aprox. unidades por kilo
   const IMG = { 1: '/assets/img/bolsa-1kg-640.webp', 2: '/assets/img/bolsa-2kg-640.webp', 5: '/assets/img/bolsa-5kg-640.webp' };
   const MAX_QTY = 50;
+  const cardSyncs = [];
   const store = {
     get() { try { return JSON.parse(localStorage.getItem('etelvina-pedido') || '[]'); } catch { return []; } },
     set(v) { try { localStorage.setItem('etelvina-pedido', JSON.stringify(v)); } catch { /* sin storage */ } },
@@ -80,6 +81,7 @@
       const label = `una bolsa de ${l.kg} kg ${l.size}`;
       return `<li class="line" data-i="${i}"><img src="${IMG[l.kg]}" alt="" width="56" height="56"><div><div class="line__t">Bolsa ${l.kg} kg</div><div class="line__s">${cap(l.size)} · ≈ ${PER_KG[l.size] * l.kg * l.qty} chipás</div></div>${qtyControl(l.qty, label)}</li>`;
     }).join('');
+    cardSyncs.forEach((f) => f());
   };
 
   const add = (kg, size, qty) => {
@@ -89,30 +91,54 @@
     countEl.classList.remove('bump'); void countEl.offsetWidth; countEl.classList.add('bump');
   };
 
+  // cada bolsa refleja el pedido: el contador muestra cuántas hay de ese tamaño
+  const qtyOf = (kg, size) => (order.find((l) => l.kg === kg && l.size === size) || {}).qty || 0;
+  const setQty = (kg, size, q) => {
+    const prev = qtyOf(kg, size);
+    q = Math.max(0, Math.min(MAX_QTY, q));
+    const ex = order.find((l) => l.kg === kg && l.size === size);
+    if (ex) ex.qty = q; else if (q > 0) order.push({ kg, size, qty: q });
+    order = order.filter((l) => l.qty > 0);
+    render();
+    if (q > prev) { countEl.classList.remove('bump'); void countEl.offsetWidth; countEl.classList.add('bump'); }
+  };
+
   $$('[data-prod]').forEach((card) => {
     const kg = Number(card.dataset.kg);
     const yieldEl = $('[data-yield]', card);
     const val = $('[data-qty-val]', card);
+    const label = $('[data-qty-label]', card);
     const dec = $('[data-dec]', card);
     const inc = $('[data-inc]', card);
     const addBtn = $('[data-add]', card);
-    let qty = 1;
+    const inOrder = $('[data-inorder]', card);
     const size = () => ($('input[type=radio]:checked', card) || {}).value || 'mediano';
     const sync = () => {
-      val.textContent = qty;
-      dec.disabled = qty <= 1; inc.disabled = qty >= MAX_QTY;
-      const n = PER_KG[size()] * kg;
-      yieldEl.textContent = qty > 1 ? `≈ ${n * qty} chipás en total` : `≈ ${n} chipás por bolsa`;
-      addBtn.textContent = qty > 1 ? `Agregar ${qty} bolsas al pedido` : 'Agregar al pedido';
+      const s = size(); const q = qtyOf(kg, s); const n = PER_KG[s] * kg;
+      val.textContent = q;
+      dec.disabled = q <= 0; inc.disabled = q >= MAX_QTY;
+      label.textContent = `Bolsas ${s === 'pequeño' ? 'pequeñas' : s === 'mediano' ? 'medianas' : 'grandes'}`;
+      yieldEl.textContent = q > 1 ? `≈ ${n * q} chipás en total` : `≈ ${n} chipás por bolsa`;
+      addBtn.textContent = q > 0 ? 'Ver pedido' : 'Agregar al pedido';
+      addBtn.classList.toggle('btn--ghost', q > 0);
+      addBtn.classList.toggle('btn--primary', q === 0);
+      const lines = order.filter((l) => l.kg === kg);
+      inOrder.hidden = !lines.length;
+      inOrder.innerHTML = lines.length
+        ? '<span>En tu pedido:</span> ' + lines.map((l) => `<button type="button" data-pick="${l.size}"${l.size === s ? ' class="is-cur"' : ''}>${l.qty} ${cap(l.size)}</button>`).join('')
+        : '';
     };
+    cardSyncs.push(sync);
     card.addEventListener('change', sync);
-    dec.addEventListener('click', () => { qty = Math.max(1, qty - 1); sync(); });
-    inc.addEventListener('click', () => { qty = Math.min(MAX_QTY, qty + 1); sync(); });
+    dec.addEventListener('click', () => setQty(kg, size(), qtyOf(kg, size()) - 1));
+    inc.addEventListener('click', () => setQty(kg, size(), qtyOf(kg, size()) + 1));
     addBtn.addEventListener('click', () => {
-      add(kg, size(), qty);
-      addBtn.classList.add('is-added');
-      addBtn.textContent = '¡Agregado!';
-      setTimeout(() => { addBtn.classList.remove('is-added'); qty = 1; sync(); }, 1300);
+      if (qtyOf(kg, size()) > 0) { openDrawer(); return; }
+      setQty(kg, size(), 1);
+    });
+    inOrder.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-pick]'); if (!b) return;
+      const r = $(`input[value="${b.dataset.pick}"]`, card); if (r) { r.checked = true; sync(); }
     });
     sync();
   });
