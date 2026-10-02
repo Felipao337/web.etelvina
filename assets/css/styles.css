@@ -300,6 +300,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .productos { background: var(--papel); }
 .productos__rail {
   overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  scroll-padding-inline: var(--gutter); overscroll-behavior-x: contain;
   scrollbar-width: none; padding-bottom: 8px;
 }
 .productos__rail::-webkit-scrollbar { display: none; }
@@ -309,7 +310,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   width: max-content;
 }
 .prod {
-  scroll-snap-align: center;
+  scroll-snap-align: start; scroll-snap-stop: always;
   background: var(--crudo);
   border-radius: var(--radius);
   overflow: hidden;
@@ -366,8 +367,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .btn.is-added { background: #0f2640; }
 
 .rail-dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
-.rail-dots span { width: 7px; height: 7px; border-radius: 50%; background: var(--azul-12); transition: background-color .3s, width .3s; }
-.rail-dots span.is-on { background: var(--azul); width: 22px; border-radius: 4px; }
+.rail-dots button {
+  position: relative; width: 8px; height: 8px; padding: 0; border: 0; border-radius: 4px; cursor: pointer;
+  background: var(--azul-12); transition: background-color .3s, width .3s;
+}
+.rail-dots button::after { content: ""; position: absolute; inset: -12px -6px; }  /* área táctil */
+.rail-dots button.is-on { background: var(--azul); width: 26px; }
 .productos__foot { margin: 32px auto 0; font-size: 16px; color: var(--azul-80); }
 .productos__foot a { font-weight: 700; color: var(--azul); text-underline-offset: 3px; }
 
@@ -632,7 +637,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .hero__grid { gap: 28px; }
   .hero__title { font-size: clamp(38px, 10.6vw, 44px); margin-bottom: 14px; }
   .hero__lead { font-size: 15px; margin-bottom: 20px; }
-  .hero__ctas { gap: 10px; }
+  .hero__ctas { gap: 8px; justify-content: flex-start; }
+  .hero__ctas .btn { flex: 0 0 auto; --h: 42px; padding: 0 14px; font-size: 13.5px; gap: 7px; }
+  .hero__ctas .ico-wa { width: 16px; height: 16px; }
   .hero__stamp { width: 92px; bottom: -34px; }
   .ticker { padding: 12px 0; }
   .ticker span { font-size: 18px; }

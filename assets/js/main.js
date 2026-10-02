@@ -186,20 +186,46 @@
     map.forEach((_, id) => { const s = document.getElementById(id); if (s) nio.observe(s); });
   }
 
-  /* ---------- Carrusel de productos (mobile): dots ---------- */
+  /* ---------- Carrusel de productos (mobile): swipe manual + pase automático ---------- */
   const rail = $('[data-rail]');
-  const dots = $$('[data-rail-dots] span');
+  const dots = $$('[data-rail-dots] button');
   if (rail && dots.length) {
     const cards = $$('.prod', rail);
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const scrollable = () => rail.scrollWidth > rail.clientWidth + 4;
+    const pad = () => parseFloat(getComputedStyle(rail).scrollPaddingInlineStart) || 0;
+    let idx = 0;
+    const current = () => {
+      let best = 0, d = Infinity;
+      cards.forEach((c, i) => { const x = Math.abs(c.offsetLeft - pad() - rail.scrollLeft); if (x < d) { d = x; best = i; } });
+      return best;
+    };
+    const go = (i) => { idx = (i + cards.length) % cards.length; rail.scrollTo({ left: cards[idx].offsetLeft - pad(), behavior: 'smooth' }); };
+    let raf = 0;
     rail.addEventListener('scroll', () => {
-      const mid = rail.scrollLeft + rail.clientWidth / 2;
-      let idx = 0, best = Infinity;
-      cards.forEach((c, i) => {
-        const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid);
-        if (d < best) { best = d; idx = i; }
-      });
-      dots.forEach((d, i) => d.classList.toggle('is-on', i === idx));
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => { idx = current(); dots.forEach((d, i) => d.classList.toggle('is-on', i === idx)); });
     }, { passive: true });
+    dots.forEach((d, i) => d.addEventListener('click', () => { pause(); go(i); }));
+
+    // pase automático: sólo en mobile, con el carrusel a la vista y sin que el usuario lo esté usando
+    let timer = 0, visible = false, idleUntil = 0, stopped = false;
+    const INTERVAL = 4200, IDLE = 9000;
+    const tick = () => {
+      clearTimeout(timer);
+      if (stopped || reduceMotion) return;
+      timer = setTimeout(() => {
+        if (visible && scrollable() && Date.now() > idleUntil && !document.hidden) go(idx + 1);
+        tick();
+      }, INTERVAL);
+    };
+    function pause() { idleUntil = Date.now() + IDLE; }
+    ['pointerdown', 'touchstart', 'wheel', 'focusin'].forEach((ev) => rail.addEventListener(ev, pause, { passive: true }));
+    // si eligió tamaño, cantidad o agregó al pedido, no lo movemos más
+    rail.addEventListener('change', () => { stopped = true; });
+    rail.addEventListener('click', (e) => { if (e.target.closest('button')) stopped = true; });
+    new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible) idleUntil = Date.now() + 2000; }, { threshold: 0.6 }).observe(rail);
+    tick();
   }
 
   /* ---------- WhatsApp flotante ---------- */
