@@ -139,13 +139,13 @@
 
         <div class="receta__collage">
           <figure class="ph ph--a reveal">
-            <img src="/assets/img/abuela-9467-900.webp" srcset="/assets/img/abuela-9467-900.webp 900w, /assets/img/abuela-9467-1800.webp 1800w" sizes="(min-width: 960px) 34vw, 70vw" alt="Manos de la abuela amasando en un bol sobre mantel a cuadros" width="1800" height="1200" loading="lazy">
+            <img src="/assets/img/abuela-9467-900.webp" srcset="/assets/img/abuela-9467-900.webp 900w, /assets/img/abuela-9467-1800.webp 1800w" sizes="(min-width: 960px) 52vw, 100vw" alt="Manos de la abuela amasando en un bol sobre mantel a cuadros" width="1800" height="1200" loading="lazy">
           </figure>
           <figure class="ph ph--b reveal">
-            <img src="/assets/img/abuela-9517-900.webp" srcset="/assets/img/abuela-9517-900.webp 900w, /assets/img/abuela-9517-1800.webp 1800w" sizes="(min-width: 960px) 18vw, 45vw" alt="La abuela rallando queso para la masa" width="1200" height="1800" loading="lazy">
+            <img src="/assets/img/abuela-9517-900.webp" srcset="/assets/img/abuela-9517-900.webp 900w, /assets/img/abuela-9517-1800.webp 1800w" sizes="(min-width: 960px) 26vw, 50vw" alt="La abuela rallando queso para la masa" width="1200" height="1800" loading="lazy">
           </figure>
           <figure class="ph ph--c reveal">
-            <img src="/assets/img/abuela-9688-900.webp" srcset="/assets/img/abuela-9688-900.webp 900w, /assets/img/abuela-9688-1800.webp 1800w" sizes="(min-width: 960px) 20vw, 50vw" alt="Un chipá recién horneado abierto, con el queso estirándose" width="1200" height="1800" loading="lazy">
+            <img src="/assets/img/abuela-9688-900.webp" srcset="/assets/img/abuela-9688-900.webp 900w, /assets/img/abuela-9688-1800.webp 1800w" sizes="(min-width: 960px) 26vw, 50vw" alt="Un chipá recién horneado abierto, con el queso estirándose" width="1200" height="1800" loading="lazy">
           </figure>
         </div>
       </div>
@@ -176,11 +176,12 @@
 
     <!-- ============ PRODUCTOS ============ -->
     <section class="productos section" id="productos">
+      <div class="rain" data-rain="7" aria-hidden="true"></div>
       <div class="wrap">
         <header class="section__head">
           <p class="eyebrow reveal">Nuestras bolsas</p>
           <h2 class="h2 reveal">Elegí tu bolsa. La receta no cambia.</h2>
-          <p class="section__lead reveal">Chipá crudo congelado, listo para hornear. Las tres bolsas vienen en tres tamaños de chipá: elegí el que más te guste y pedilo por WhatsApp.</p>
+          <p class="section__lead reveal">Chipá crudo congelado, listo para hornear. Armá tu pedido: elegí la bolsa, el tamaño del chipá y cuántas querés. Lo mandás todo junto en un solo WhatsApp.</p>
         </header>
       </div>
 
@@ -201,11 +202,15 @@
                 <label><input type="radio" name="size-1" value="mediano" checked><span>Mediano</span></label>
                 <label><input type="radio" name="size-1" value="grande"><span>Grande</span></label>
               </fieldset>
-              <p class="prod__yield" data-yield aria-live="polite">Rinde aprox. 16 chipás</p>
-              <a class="btn btn--primary btn--block" data-wa-prod href="https://wa.me/5491158255145" target="_blank" rel="noopener">
-                <svg class="ico-wa" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-wa"/></svg>
-                Pedir 1 kg por WhatsApp
-              </a>
+              <div class="prod__row">
+                <div class="qty" data-qty>
+                  <button type="button" data-dec aria-label="Restar una bolsa de 1 kg">−</button>
+                  <output data-qty-val aria-live="polite">1</output>
+                  <button type="button" data-inc aria-label="Sumar una bolsa de 1 kg">+</button>
+                </div>
+                <p class="prod__yield" data-yield>≈ 16 chipás por bolsa</p>
+              </div>
+              <button class="btn btn--primary btn--block" type="button" data-add>Agregar al pedido</button>
             </div>
           </li>
 
@@ -223,11 +228,15 @@
                 <label><input type="radio" name="size-2" value="mediano" checked><span>Mediano</span></label>
                 <label><input type="radio" name="size-2" value="grande"><span>Grande</span></label>
               </fieldset>
-              <p class="prod__yield" data-yield aria-live="polite">Rinde aprox. 32 chipás</p>
-              <a class="btn btn--primary btn--block" data-wa-prod href="https://wa.me/5491158255145" target="_blank" rel="noopener">
-                <svg class="ico-wa" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-wa"/></svg>
-                Pedir 2 kg por WhatsApp
-              </a>
+              <div class="prod__row">
+                <div class="qty" data-qty>
+                  <button type="button" data-dec aria-label="Restar una bolsa de 2 kg">−</button>
+                  <output data-qty-val aria-live="polite">1</output>
+                  <button type="button" data-inc aria-label="Sumar una bolsa de 2 kg">+</button>
+                </div>
+                <p class="prod__yield" data-yield>≈ 16 chipás por bolsa</p>
+              </div>
+              <button class="btn btn--primary btn--block" type="button" data-add>Agregar al pedido</button>
             </div>
           </li>
 
@@ -245,11 +254,15 @@
                 <label><input type="radio" name="size-5" value="mediano" checked><span>Mediano</span></label>
                 <label><input type="radio" name="size-5" value="grande"><span>Grande</span></label>
               </fieldset>
-              <p class="prod__yield" data-yield aria-live="polite">Rinde aprox. 80 chipás</p>
-              <a class="btn btn--primary btn--block" data-wa-prod href="https://wa.me/5491158255145" target="_blank" rel="noopener">
-                <svg class="ico-wa" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-wa"/></svg>
-                Pedir 5 kg por WhatsApp
-              </a>
+              <div class="prod__row">
+                <div class="qty" data-qty>
+                  <button type="button" data-dec aria-label="Restar una bolsa de 5 kg">−</button>
+                  <output data-qty-val aria-live="polite">1</output>
+                  <button type="button" data-inc aria-label="Sumar una bolsa de 5 kg">+</button>
+                </div>
+                <p class="prod__yield" data-yield>≈ 16 chipás por bolsa</p>
+              </div>
+              <button class="btn btn--primary btn--block" type="button" data-add>Agregar al pedido</button>
             </div>
           </li>
         </ul>
@@ -260,6 +273,7 @@
 
     <!-- ============ PREPARACIÓN ============ -->
     <section class="prep section section--azul" id="preparacion">
+      <div class="rain rain--azul" data-rain="9" aria-hidden="true"></div>
       <div class="wrap">
         <header class="section__head section__head--center">
           <img class="prep__stamp reveal" src="/assets/brand/ico-frases-crudo.svg" alt="" width="220" height="110" loading="lazy">
@@ -297,11 +311,11 @@
         <h2 class="h2 reveal" id="momentos-t">Mate, chipá y una mesa llena.</h2>
         <p class="note reveal">No hace falta mucho más.</p>
       </div>
-      <div class="momentos__strip">
-        <figure class="reveal"><img src="/assets/img/plato-1-640.webp" srcset="/assets/img/plato-1-640.webp 640w, /assets/img/plato-1-1200.webp 1200w" sizes="(min-width: 960px) 25vw, 70vw" alt="Plato con chipás horneados" width="1200" height="1200" loading="lazy"></figure>
-        <figure class="reveal"><img src="/assets/img/foto-06752-900.webp" srcset="/assets/img/foto-06752-900.webp 900w, /assets/img/foto-06752-1800.webp 1800w" sizes="(min-width: 960px) 37vw, 85vw" alt="Chipás recién horneados frente a la bolsa con el sello Aprobado por la abuela" width="1800" height="1200" loading="lazy"></figure>
-        <figure class="reveal"><img src="/assets/img/abuela-9655-900.webp" srcset="/assets/img/abuela-9655-900.webp 900w, /assets/img/abuela-9655-1800.webp 1800w" sizes="(min-width: 960px) 18vw, 50vw" alt="La abuela sosteniendo un chipá con las dos manos" width="1200" height="1800" loading="lazy"></figure>
-        <figure class="reveal"><img src="/assets/img/plato-3-640.webp" srcset="/assets/img/plato-3-640.webp 640w, /assets/img/plato-3-1200.webp 1200w" sizes="(min-width: 960px) 25vw, 70vw" alt="Chipás abiertos en un plato a cuadros azules" width="1200" height="1200" loading="lazy"></figure>
+      <div class="momentos__grid wrap">
+        <figure class="m m--tall reveal"><img src="/assets/img/abuela-9655-900.webp" srcset="/assets/img/abuela-9655-900.webp 900w, /assets/img/abuela-9655-1800.webp 1800w" sizes="(min-width: 960px) 33vw, 50vw" alt="La abuela sosteniendo un chipá con las dos manos" width="1200" height="1800" loading="lazy"></figure>
+        <figure class="m m--sq reveal"><img src="/assets/img/plato-3-640.webp" srcset="/assets/img/plato-3-640.webp 640w, /assets/img/plato-3-1200.webp 1200w" sizes="(min-width: 960px) 33vw, 50vw" alt="Chipás horneados en una fuente de madera" width="1200" height="1200" loading="lazy"></figure>
+        <figure class="m m--sq reveal"><img src="/assets/img/plato-1-640.webp" srcset="/assets/img/plato-1-640.webp 640w, /assets/img/plato-1-1200.webp 1200w" sizes="(min-width: 960px) 33vw, 50vw" alt="Plato a cuadros azules con chipás" width="1200" height="1200" loading="lazy"></figure>
+        <figure class="m m--wide reveal"><img src="/assets/img/foto-06771-900.webp" srcset="/assets/img/foto-06771-900.webp 900w, /assets/img/foto-06771-1800.webp 1800w" sizes="(min-width: 960px) 66vw, 100vw" alt="Chipás recién horneados delante de la bolsa Etelvina" width="1800" height="1200" loading="lazy"></figure>
       </div>
     </section>
 
@@ -396,7 +410,8 @@
     </section>
 
     <!-- ============ CIERRE / CONTACTO ============ -->
-    <section class="cierre section section--azul" id="contacto">
+    <section class="cierre section section--azul" id="contacto" data-pile-zone>
+      <canvas class="pile" data-pile aria-hidden="true"></canvas>
       <div class="wrap cierre__grid">
         <div class="cierre__copy">
           <h2 class="cierre__title reveal">Siempre hay lugar para un chipá.</h2>
@@ -424,6 +439,43 @@
     </div>
   </footer>
 
+  <!-- Pedido -->
+  <div class="order-bar" data-order-bar hidden>
+    <button class="order-bar__btn" type="button" data-order-open>
+      <span class="order-bar__count" data-order-count>0</span>
+      <span class="order-bar__label">Tu pedido <span class="order-bar__kg" data-order-kg>0 kg</span></span>
+      <span class="order-bar__cta">Ver y enviar</span>
+    </button>
+  </div>
+
+  <div class="drawer" data-drawer hidden>
+    <div class="drawer__backdrop" data-drawer-close></div>
+    <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawer-t">
+      <header class="drawer__head">
+        <h2 id="drawer-t">Tu pedido</h2>
+        <button class="drawer__x" type="button" data-drawer-close aria-label="Cerrar">×</button>
+      </header>
+      <ul class="drawer__list" data-order-list role="list"></ul>
+      <p class="drawer__empty" data-order-empty>Todavía no agregaste bolsas.</p>
+      <div class="drawer__total"><span>Total</span><strong data-order-total>0 kg</strong></div>
+      <div class="drawer__fields">
+        <div class="field">
+          <label for="o-nombre">Tu nombre <span class="opt">(opcional)</span></label>
+          <input id="o-nombre" type="text" autocomplete="name" data-order-name>
+        </div>
+        <div class="field">
+          <label for="o-zona">Barrio o localidad <span class="opt">(opcional)</span></label>
+          <input id="o-zona" type="text" autocomplete="address-level2" data-order-zone>
+        </div>
+      </div>
+      <a class="btn btn--primary btn--block" href="https://wa.me/5491158255145" target="_blank" rel="noopener" data-order-send>
+        <svg class="ico-wa" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-wa"/></svg>
+        Enviar pedido por WhatsApp
+      </a>
+      <p class="drawer__note">Te respondemos por WhatsApp con el precio, la disponibilidad y el envío.</p>
+    </div>
+  </div>
+
   <!-- WhatsApp flotante (mobile) -->
   <a class="wa-float" data-wa="Hola Etelvina! Quiero hacer un pedido de chipá." href="https://wa.me/5491158255145" target="_blank" rel="noopener" aria-label="Pedir por WhatsApp" data-wa-float>
     <svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-wa"/></svg>
@@ -434,5 +486,6 @@
   </svg>
 
   <script src="/assets/js/main.js" defer></script>
+  <script src="/assets/js/chipas.js" defer></script>
 </body>
 </html>

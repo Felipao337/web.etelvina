@@ -7,20 +7,123 @@
   /* ---------- Links de WhatsApp con mensaje precargado ---------- */
   $$('[data-wa]').forEach((a) => { a.href = waURL(a.dataset.wa); });
 
-  /* ---------- Productos: tamaño del chipá → rinde + mensaje ---------- */
+  /* ---------- Pedido: bolsas + tamaño + cantidad → un solo WhatsApp ---------- */
   const PER_KG = { 'pequeño': 25, mediano: 16, grande: 12 }; // aprox. unidades por kilo
+  const IMG = { 1: '/assets/img/bolsa-1kg-640.webp', 2: '/assets/img/bolsa-2kg-640.webp', 5: '/assets/img/bolsa-5kg-640.webp' };
+  const MAX_QTY = 50;
+  const store = {
+    get() { try { return JSON.parse(localStorage.getItem('etelvina-pedido') || '[]'); } catch { return []; } },
+    set(v) { try { localStorage.setItem('etelvina-pedido', JSON.stringify(v)); } catch { /* sin storage */ } },
+  };
+  let order = store.get().filter((l) => IMG[l.kg] && PER_KG[l.size] && l.qty > 0);
+
+  const bar = $('[data-order-bar]');
+  const countEl = $('[data-order-count]');
+  const kgEl = $('[data-order-kg]');
+  const drawer = $('[data-drawer]');
+  const list = $('[data-order-list]');
+  const empty = $('[data-order-empty]');
+  const totalEl = $('[data-order-total]');
+  const sendBtn = $('[data-order-send]');
+  const nameIn = $('[data-order-name]');
+  const zoneIn = $('[data-order-zone]');
+
+  const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+  const totals = () => order.reduce((a, l) => ({ bags: a.bags + l.qty, kg: a.kg + l.qty * l.kg }), { bags: 0, kg: 0 });
+  const orderText = () => {
+    const lines = order.map((l) => `• ${l.qty} × bolsa de ${l.kg} kg, chipá ${l.size}`);
+    const t = totals();
+    let msg = `Hola Etelvina! Quiero hacer este pedido:\n${lines.join('\n')}\nTotal: ${t.bags} ${t.bags === 1 ? 'bolsa' : 'bolsas'} (${t.kg} kg)`;
+    const n = nameIn.value.trim(); const z = zoneIn.value.trim();
+    if (n) msg += `\nNombre: ${n}`;
+    if (z) msg += `\nZona: ${z}`;
+    return msg;
+  };
+
+  const qtyControl = (val, label) => `<div class="qty"><button type="button" data-line-dec aria-label="Restar ${label}">−</button><output>${val}</output><button type="button" data-line-inc aria-label="Sumar ${label}"${val >= MAX_QTY ? ' disabled' : ''}>+</button></div>`;
+
+  const render = () => {
+    const t = totals();
+    store.set(order);
+    countEl.textContent = t.bags;
+    kgEl.textContent = `${t.kg} kg`;
+    totalEl.textContent = `${t.bags} ${t.bags === 1 ? 'bolsa' : 'bolsas'} · ${t.kg} kg`;
+    const has = t.bags > 0;
+    bar.hidden = false;
+    bar.classList.toggle('is-visible', has);
+    document.body.classList.toggle('has-order', has);
+    empty.hidden = has;
+    sendBtn.setAttribute('aria-disabled', String(!has));
+    sendBtn.href = has ? waURL(orderText()) : '#';
+    list.innerHTML = order.map((l, i) => {
+      const label = `una bolsa de ${l.kg} kg ${l.size}`;
+      return `<li class="line" data-i="${i}"><img src="${IMG[l.kg]}" alt="" width="56" height="56"><div><div class="line__t">Bolsa ${l.kg} kg</div><div class="line__s">${cap(l.size)} · ≈ ${PER_KG[l.size] * l.kg * l.qty} chipás</div></div>${qtyControl(l.qty, label)}</li>`;
+    }).join('');
+  };
+
+  const add = (kg, size, qty) => {
+    const ex = order.find((l) => l.kg === kg && l.size === size);
+    if (ex) ex.qty = Math.min(MAX_QTY, ex.qty + qty); else order.push({ kg, size, qty });
+    render();
+    countEl.classList.remove('bump'); void countEl.offsetWidth; countEl.classList.add('bump');
+  };
+
   $$('[data-prod]').forEach((card) => {
     const kg = Number(card.dataset.kg);
     const yieldEl = $('[data-yield]', card);
-    const btn = $('[data-wa-prod]', card);
-    const update = () => {
-      const size = ($('input[type=radio]:checked', card) || {}).value || 'mediano';
-      yieldEl.textContent = `Rinde aprox. ${PER_KG[size] * kg} chipás`;
-      btn.href = waURL(`Hola Etelvina! Quiero pedir una bolsa de ${kg} kg de chipá, tamaño ${size}.`);
+    const val = $('[data-qty-val]', card);
+    const dec = $('[data-dec]', card);
+    const inc = $('[data-inc]', card);
+    const addBtn = $('[data-add]', card);
+    let qty = 1;
+    const size = () => ($('input[type=radio]:checked', card) || {}).value || 'mediano';
+    const sync = () => {
+      val.textContent = qty;
+      dec.disabled = qty <= 1; inc.disabled = qty >= MAX_QTY;
+      const n = PER_KG[size()] * kg;
+      yieldEl.textContent = qty > 1 ? `≈ ${n * qty} chipás en total` : `≈ ${n} chipás por bolsa`;
+      addBtn.textContent = qty > 1 ? `Agregar ${qty} bolsas al pedido` : 'Agregar al pedido';
     };
-    card.addEventListener('change', update);
-    update();
+    card.addEventListener('change', sync);
+    dec.addEventListener('click', () => { qty = Math.max(1, qty - 1); sync(); });
+    inc.addEventListener('click', () => { qty = Math.min(MAX_QTY, qty + 1); sync(); });
+    addBtn.addEventListener('click', () => {
+      add(kg, size(), qty);
+      addBtn.classList.add('is-added');
+      addBtn.textContent = '¡Agregado!';
+      setTimeout(() => { addBtn.classList.remove('is-added'); qty = 1; sync(); }, 1300);
+    });
+    sync();
   });
+
+  list.addEventListener('click', (e) => {
+    const btn = e.target.closest('button'); if (!btn) return;
+    const li = btn.closest('[data-i]'); const l = order[Number(li.dataset.i)];
+    if (btn.hasAttribute('data-line-inc')) l.qty = Math.min(MAX_QTY, l.qty + 1);
+    if (btn.hasAttribute('data-line-dec')) l.qty -= 1;
+    order = order.filter((x) => x.qty > 0);
+    render();
+    if (!order.length) closeDrawer();
+  });
+  [nameIn, zoneIn].forEach((el) => el.addEventListener('input', () => { if (order.length) sendBtn.href = waURL(orderText()); }));
+
+  let lastFocus = null;
+  const openDrawer = () => {
+    lastFocus = document.activeElement;
+    drawer.hidden = false;
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => { drawer.classList.add('is-open'); $('.drawer__x', drawer).focus(); });
+  };
+  function closeDrawer() {
+    drawer.classList.remove('is-open');
+    document.body.style.overflow = '';
+    setTimeout(() => { drawer.hidden = true; }, 450);
+    if (lastFocus) lastFocus.focus();
+  }
+  $('[data-order-open]').addEventListener('click', openDrawer);
+  $$('[data-drawer-close]', drawer).forEach((el) => el.addEventListener('click', closeDrawer));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !drawer.hidden) closeDrawer(); });
+  render();
 
   /* ---------- Header ---------- */
   const header = $('[data-header]');
