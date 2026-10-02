@@ -111,7 +111,6 @@
     const dec = $('[data-dec]', card);
     const inc = $('[data-inc]', card);
     const addBtn = $('[data-add]', card);
-    const inOrder = $('[data-inorder]', card);
     const size = () => ($('input[type=radio]:checked', card) || {}).value || 'mediano';
     const sync = () => {
       const s = size(); const q = qtyOf(kg, s); const n = PER_KG[s] * kg;
@@ -122,11 +121,6 @@
       addBtn.textContent = q > 0 ? 'Ver pedido' : 'Agregar al pedido';
       addBtn.classList.toggle('btn--ghost', q > 0);
       addBtn.classList.toggle('btn--primary', q === 0);
-      const lines = order.filter((l) => l.kg === kg);
-      inOrder.hidden = !lines.length;
-      inOrder.innerHTML = lines.length
-        ? '<span>En tu pedido:</span> ' + lines.map((l) => `<button type="button" data-pick="${l.size}"${l.size === s ? ' class="is-cur"' : ''}>${l.qty} ${cap(l.size)}</button>`).join('')
-        : '';
     };
     cardSyncs.push(sync);
     card.addEventListener('change', sync);
@@ -135,10 +129,6 @@
     addBtn.addEventListener('click', () => {
       if (qtyOf(kg, size()) > 0) { openDrawer(); return; }
       setQty(kg, size(), 1);
-    });
-    inOrder.addEventListener('click', (e) => {
-      const b = e.target.closest('[data-pick]'); if (!b) return;
-      const r = $(`input[value="${b.dataset.pick}"]`, card); if (r) { r.checked = true; sync(); }
     });
     sync();
   });

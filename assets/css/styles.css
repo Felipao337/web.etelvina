@@ -778,15 +778,3 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .qty output { font-size: 22px; min-width: 34px; }
   .line__t { font-size: 18px; }
 }
-
-/* Resumen por bolsa: lo que ya está en el pedido */
-.prod__inorder {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
-  margin: -4px 0 14px; font-size: 13px; color: var(--azul-60);
-}
-.prod__inorder[hidden] { display: none; }
-.prod__inorder button {
-  border: 0; cursor: pointer; padding: 4px 10px; border-radius: var(--pill);
-  background: rgba(22, 51, 85, .08); color: var(--azul); font: inherit; font-weight: 700;
-}
-.prod__inorder button.is-cur { background: var(--azul); color: var(--crudo); }
