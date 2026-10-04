@@ -980,3 +980,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .prod__qty { display: flex; align-items: center; justify-content: space-between; }
   .prod__qty .prod__qtyname { margin: 0; }
 }
+
+/* Crédito de diseño */
+.footer__credit { margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--crudo-20); display: flex; justify-content: center; }
+.footer__credit a { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--crudo-70); font-size: 12px; letter-spacing: .04em; opacity: .8; transition: opacity .25s var(--ease); }
+.footer__credit a:hover, .footer__credit a:focus-visible { opacity: 1; }
+.footer__credit img { width: 64px; height: auto; }
+@media (min-width: 768px) { .footer__credit { justify-content: flex-end; } .footer__credit img { width: 72px; } }
