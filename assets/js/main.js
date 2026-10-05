@@ -268,7 +268,6 @@
   const form = $('[data-form]');
   if (form) {
     const status = $('[data-status]', form);
-    const submit = $('[data-submit]', form);
     const msgs = {
       valueMissing: 'Completá este dato.',
       typeMismatch: 'Revisá que esté bien escrito.',
@@ -284,38 +283,35 @@
     };
     $$('input, select, textarea', form).forEach((f) => f.addEventListener('blur', () => { if (f.closest('.field.is-invalid')) showErr(f); }));
 
-    form.addEventListener('submit', async (e) => {
+    // Modo híbrido: la consulta se arma con los datos y se abre en WhatsApp o en el mail del usuario
+    const MAIL_TO = 'ventas@etelvina.com';
+    const LABELS = { comercio: 'Comercio', tipo: 'Tipo', nombre: 'Contacto', telefono: 'Teléfono', email: 'Email', localidad: 'Localidad', volumen: 'Volumen mensual', mensaje: 'Mensaje' };
+    const buildLines = (d) => Object.entries(LABELS).filter(([k]) => (d[k] || '').trim()).map(([k, l]) => `${l}: ${d[k].trim()}`);
+
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
+      if (($('[name=web]', form) || {}).value) return; // bot
       const fields = $$('input:not([name=web]), select, textarea', form);
       const ok = fields.map(showErr).every(Boolean);
       if (!ok) { const first = $('.is-invalid input, .is-invalid select', form); if (first) first.focus(); return; }
 
-      submit.disabled = true;
-      const label = submit.textContent;
-      submit.textContent = 'Enviando…';
-      status.className = 'form__status';
-      status.textContent = '';
-      try {
-        const data = Object.fromEntries(new FormData(form).entries());
-        const res = await fetch(form.action, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-        if (!res.ok) throw new Error(String(res.status));
-        form.classList.add('is-sent');
-        const done = document.createElement('div');
-        done.className = 'form-done';
-        done.innerHTML = '<img src="/assets/brand/ico-aprobado-azul.svg" alt="" width="140" height="140"><h4>¡Gracias por escribirnos!</h4><p>Ya estamos con vos. Te respondemos a la brevedad con precios y días de entrega.</p>';
-        form.prepend(done);
-        done.setAttribute('tabindex', '-1');
-        done.focus();
-      } catch (err) {
-        status.className = 'form__status is-error';
-        status.innerHTML = 'No pudimos enviar el formulario. Probá de nuevo o <a href="' + waURL('Hola Etelvina! Tengo un comercio y quiero hacer un pedido mayorista.') + '" target="_blank" rel="noopener">escribinos por WhatsApp</a>.';
-        submit.disabled = false;
-        submit.textContent = label;
+      const channel = (e.submitter && e.submitter.dataset.channel) || 'wa';
+      const d = Object.fromEntries(new FormData(form).entries());
+      const lines = buildLines(d);
+      let url;
+      if (channel === 'mail') {
+        const subject = `Consulta mayorista: ${d.comercio.trim()} (${d.localidad.trim()})`;
+        const body = `Hola Etelvina!\n\nTengo un comercio y quiero recibir precios mayoristas y días de entrega.\n\n${lines.join('\n')}\n`;
+        url = `mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = url;
+      } else {
+        url = waURL(`Hola Etelvina! Tengo un comercio y quiero hacer un pedido mayorista.\n\n${lines.join('\n')}`);
+        window.open(url, '_blank', 'noopener');
       }
+
+      const app = channel === 'mail' ? 'tu mail' : 'WhatsApp';
+      status.className = 'form__status is-ok';
+      status.innerHTML = `Te abrimos ${app} con la consulta lista: solo falta tocar <strong>Enviar</strong>. ¿No se abrió? <a href="${url}"${channel === 'mail' ? '' : ' target="_blank" rel="noopener"'}>Probá de nuevo</a>${channel === 'mail' ? ` o escribinos a <a href="mailto:${MAIL_TO}">${MAIL_TO}</a>` : ''}.`;
     });
   }
 

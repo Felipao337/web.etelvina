@@ -1001,3 +1001,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .footer__credit-links a:hover span { transform: translate(2px, -2px); }
 }
 @media (min-width: 768px) { .footer__credit { justify-content: flex-end; } .footer__credit-brand img { width: 72px; } }
+
+/* Formulario híbrido: WhatsApp o mail */
+.form__actions { display: grid; gap: 10px; }
+@media (min-width: 600px) { .form__actions { grid-template-columns: 1.3fr 1fr; } }
+.form__hint { margin: 0; font-size: 12px; color: var(--azul-60); text-align: center; }
+.form__status.is-ok { font-weight: 400; color: var(--azul-80); font-size: 14px; }
+.form__status a { color: var(--azul); font-weight: 700; text-underline-offset: 3px; }
