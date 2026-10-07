@@ -30,10 +30,10 @@
 
   /* ---------- Pedido: bolsas + tamaño + cantidad → un solo WhatsApp ---------- */
   const PER_KG = { 'pequeño': 40, mediano: 16, grande: 12 }; // aprox. unidades por kilo
-  const IMG = { 1: '/assets/img/bolsa-1kg-mediano-640.webp?v=2', 2: '/assets/img/bolsa-2kg-640.webp', 5: '/assets/img/bolsa-5kg-640.webp' };
+  const IMG = { 1: 1, 2: 1, 5: 1 }; // bolsas disponibles
   const SLUG = { 'pequeño': 'pequeno', mediano: 'mediano', grande: 'grande' };
-  // la bolsa de 1 kg tiene foto propia para cada tamaño de chipá
-  const imgFor = (kg, size) => (kg === 1 ? `/assets/img/bolsa-1kg-${SLUG[size]}-640.webp?v=2` : IMG[kg]);
+  // cada bolsa tiene foto propia para cada tamaño de chipá
+  const imgFor = (kg, size) => `/assets/img/bolsa-${kg}kg-${SLUG[size]}-640.webp?v=3`;
   const MAX_QTY = 50;
   const cardSyncs = [];
   const store = {
@@ -115,15 +115,15 @@
     const addBtn = $('[data-add]', card);
     const size = () => ($('input[type=radio]:checked', card) || {}).value || 'mediano';
     const photo = $('[data-prod-img]', card);
-    if (photo) Object.values(SLUG).forEach((sl) => { const im = new Image(); im.src = `/assets/img/bolsa-1kg-${sl}-640.webp?v=2`; });
+    if (photo) Object.values(SLUG).forEach((sl) => { const im = new Image(); im.src = `/assets/img/bolsa-${kg}kg-${sl}-640.webp?v=3`; });
     const sync = () => {
       const s = size(); const q = qtyOf(kg, s); const n = PER_KG[s] * kg;
       if (photo) {
-        const base = `/assets/img/bolsa-1kg-${SLUG[s]}`;
+        const base = `/assets/img/bolsa-${kg}kg-${SLUG[s]}`;
         if (!photo.src.includes(base)) {
-          photo.srcset = `${base}-640.webp?v=2 640w, ${base}-1200.webp?v=2 1200w`;
-          photo.src = `${base}-640.webp?v=2`;
-          photo.alt = `Bolsa de 1 kg de chipá Etelvina, tamaño ${s}`;
+          photo.srcset = `${base}-640.webp?v=3 640w, ${base}-1200.webp?v=3 1200w`;
+          photo.src = `${base}-640.webp?v=3`;
+          photo.alt = `Bolsa de ${kg} kg de chipá Etelvina, tamaño ${s}`;
         }
       }
       val.textContent = q;
