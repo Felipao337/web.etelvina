@@ -1008,3 +1008,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .form__hint { margin: 0; font-size: 12px; color: var(--azul-60); text-align: center; }
 .form__status.is-ok { font-weight: 400; color: var(--azul-80); font-size: 14px; }
 .form__status a { color: var(--azul); font-weight: 700; text-underline-offset: 3px; }
+
+/* Precios */
+.prod__head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.prod__head .prod__title { margin-bottom: 0; }
+.prod__price { margin: 0; font-family: var(--f-title); font-size: 26px; letter-spacing: var(--track-title); color: var(--azul); white-space: nowrap; }
+.drawer__total small { display: block; font-size: 12px; color: var(--azul-60); }
+@media (max-width: 767px) { .prod__head { margin-bottom: 4px; } .prod__price { font-size: 21px; } }

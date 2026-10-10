@@ -49,16 +49,19 @@
   const list = $('[data-order-list]');
   const empty = $('[data-order-empty]');
   const totalEl = $('[data-order-total]');
+  const totalSub = $('[data-order-total-sub]');
   const sendBtn = $('[data-order-send]');
   const nameIn = $('[data-order-name]');
   const zoneIn = $('[data-order-zone]');
 
   const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
-  const totals = () => order.reduce((a, l) => ({ bags: a.bags + l.qty, kg: a.kg + l.qty * l.kg }), { bags: 0, kg: 0 });
+  const PRICE = { 1: 19000, 2: 22000, 5: 22000 }; // precio por bolsa, en pesos
+  const money = (n) => '$' + n.toLocaleString('es-AR');
+  const totals = () => order.reduce((a, l) => ({ bags: a.bags + l.qty, kg: a.kg + l.qty * l.kg, price: a.price + l.qty * PRICE[l.kg] }), { bags: 0, kg: 0, price: 0 });
   const orderText = () => {
-    const lines = order.map((l) => `• ${l.qty} × bolsa de ${l.kg} kg, chipá ${l.size}`);
+    const lines = order.map((l) => `• ${l.qty} × bolsa de ${l.kg} kg, chipá ${l.size} — ${money(l.qty * PRICE[l.kg])}`);
     const t = totals();
-    let msg = `Hola Etelvina! Quiero hacer este pedido:\n${lines.join('\n')}\nTotal: ${t.bags} ${t.bags === 1 ? 'bolsa' : 'bolsas'} (${t.kg} kg)`;
+    let msg = `Hola Etelvina! Quiero hacer este pedido:\n${lines.join('\n')}\nTotal: ${t.bags} ${t.bags === 1 ? 'bolsa' : 'bolsas'} (${t.kg} kg) — ${money(t.price)}`;
     const n = nameIn.value.trim(); const z = zoneIn.value.trim();
     if (n) msg += `\nNombre: ${n}`;
     if (z) msg += `\nZona: ${z}`;
@@ -71,8 +74,9 @@
     const t = totals();
     store.set(order);
     countEl.textContent = t.bags;
-    kgEl.textContent = `${t.kg} kg`;
-    totalEl.textContent = `${t.bags} ${t.bags === 1 ? 'bolsa' : 'bolsas'} · ${t.kg} kg`;
+    kgEl.textContent = money(t.price);
+    totalEl.textContent = money(t.price);
+    totalSub.textContent = `${t.bags} ${t.bags === 1 ? 'bolsa' : 'bolsas'} · ${t.kg} kg`;
     const has = t.bags > 0;
     bar.hidden = false;
     bar.classList.toggle('is-visible', has);
@@ -82,7 +86,7 @@
     sendBtn.href = has ? waURL(orderText()) : '#';
     list.innerHTML = order.map((l, i) => {
       const label = `una bolsa de ${l.kg} kg ${l.size}`;
-      return `<li class="line" data-i="${i}"><img src="${imgFor(l.kg, l.size)}" alt="" width="56" height="56"><div><div class="line__t">Bolsa ${l.kg} kg</div><div class="line__s">${cap(l.size)} · ≈ ${PER_KG[l.size] * l.kg * l.qty} chipás</div></div>${qtyControl(l.qty, label)}</li>`;
+      return `<li class="line" data-i="${i}"><img src="${imgFor(l.kg, l.size)}" alt="" width="56" height="56"><div><div class="line__t">Bolsa ${l.kg} kg</div><div class="line__s">${cap(l.size)} · ${money(l.qty * PRICE[l.kg])}</div></div>${qtyControl(l.qty, label)}</li>`;
     }).join('');
     cardSyncs.forEach((f) => f());
   };
