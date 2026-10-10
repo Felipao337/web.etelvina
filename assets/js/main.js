@@ -33,7 +33,7 @@
   const IMG = { 1: 1, 2: 1, 5: 1 }; // bolsas disponibles
   const SLUG = { 'pequeño': 'pequeno', mediano: 'mediano', grande: 'grande' };
   // cada bolsa tiene foto propia para cada tamaño de chipá
-  const imgFor = (kg, size) => `/assets/img/bolsa-${kg}kg-${SLUG[size]}-640.webp?v=3`;
+  const imgFor = (kg, size) => `/assets/img/bolsa-${kg}kg-${SLUG[size]}-640.webp?v=4`;
   const MAX_QTY = 50;
   const cardSyncs = [];
   const store = {
@@ -119,14 +119,14 @@
     const addBtn = $('[data-add]', card);
     const size = () => ($('input[type=radio]:checked', card) || {}).value || 'mediano';
     const photo = $('[data-prod-img]', card);
-    if (photo) Object.values(SLUG).forEach((sl) => { const im = new Image(); im.src = `/assets/img/bolsa-${kg}kg-${sl}-640.webp?v=3`; });
+    if (photo) Object.values(SLUG).forEach((sl) => { const im = new Image(); im.src = `/assets/img/bolsa-${kg}kg-${sl}-640.webp?v=4`; });
     const sync = () => {
       const s = size(); const q = qtyOf(kg, s); const n = PER_KG[s] * kg;
       if (photo) {
         const base = `/assets/img/bolsa-${kg}kg-${SLUG[s]}`;
         if (!photo.src.includes(base)) {
-          photo.srcset = `${base}-640.webp?v=3 640w, ${base}-1200.webp?v=3 1200w`;
-          photo.src = `${base}-640.webp?v=3`;
+          photo.srcset = `${base}-640.webp?v=4 640w, ${base}-1200.webp?v=4 1200w`;
+          photo.src = `${base}-640.webp?v=4`;
           photo.alt = `Bolsa de ${kg} kg de chipá Etelvina, tamaño ${s}`;
         }
       }
