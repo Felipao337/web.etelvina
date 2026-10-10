@@ -4,6 +4,16 @@
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 
+  /* ---------- URL limpia: saca utm_*, fbclid, gclid, etc. de la barra ---------- */
+  try {
+    const u = new URL(location.href);
+    const junk = [...u.searchParams.keys()].filter((k) => /^(utm_|fbclid$|gclid$|igshid$|mc_|_ga$)/i.test(k));
+    if (junk.length) {
+      junk.forEach((k) => u.searchParams.delete(k));
+      history.replaceState(history.state, '', u.pathname + (u.search === '?' ? '' : u.search) + u.hash);
+    }
+  } catch (e) { /* sin soporte: se deja como está */ }
+
   /* ---------- Reveal on scroll ---------- */
   if ('IntersectionObserver' in window) {
     document.documentElement.classList.add('reveal-on');
