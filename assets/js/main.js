@@ -55,13 +55,13 @@
   const zoneIn = $('[data-order-zone]');
 
   const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
-  const PRICE = { 1: 19000, 2: 22000, 5: 22000 }; // precio por bolsa, en pesos
+  const PRICE = { 1: 22000, 2: 38000, 5: 95000 }; // precio por bolsa: 1 kg $22.000; 2 y 5 kg a $19.000 el kg
   const money = (n) => '$' + n.toLocaleString('es-AR');
   const totals = () => order.reduce((a, l) => ({ bags: a.bags + l.qty, kg: a.kg + l.qty * l.kg, price: a.price + l.qty * PRICE[l.kg] }), { bags: 0, kg: 0, price: 0 });
   const orderText = () => {
     const lines = order.map((l) => `• ${l.qty} × bolsa de ${l.kg} kg, chipá ${l.size} — ${money(l.qty * PRICE[l.kg])}`);
     const t = totals();
-    let msg = `Hola Etelvina! Quiero hacer este pedido:\n${lines.join('\n')}\nTotal: ${t.bags} ${t.bags === 1 ? 'bolsa' : 'bolsas'} (${t.kg} kg) — ${money(t.price)}`;
+    let msg = `Hola Etelvina! Quiero hacer este pedido:\n${lines.join('\n')}\nTotal: ${t.bags} ${t.bags === 1 ? 'bolsa' : 'bolsas'} (${t.kg} kg) — ${money(t.price)} + envío`;
     const n = nameIn.value.trim(); const z = zoneIn.value.trim();
     if (n) msg += `\nNombre: ${n}`;
     if (z) msg += `\nZona: ${z}`;

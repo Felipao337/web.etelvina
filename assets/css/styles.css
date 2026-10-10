@@ -1015,3 +1015,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .prod__price { margin: 0; font-family: var(--f-title); font-size: 26px; letter-spacing: var(--track-title); color: var(--azul); white-space: nowrap; }
 .drawer__total small { display: block; font-size: 12px; color: var(--azul-60); }
 @media (max-width: 767px) { .prod__head { margin-bottom: 4px; } .prod__price { font-size: 21px; } }
+.prod__price { text-align: right; line-height: 1.05; }
+.prod__perkg { display: block; font-family: var(--f-text); font-size: 12px; letter-spacing: 0; color: var(--azul-60); margin-top: 2px; }
+.drawer__ship { margin: -8px 0 0; font-size: 12px; color: var(--azul-60); text-align: right; }
